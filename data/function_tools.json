@@ -1,0 +1,2113 @@
+[
+  {
+    "name": "read_pdf_tool",
+    "input": {"file_path": "str"},
+    "output": {"content": "str"},
+    "description": "Extracts all text content from a PDF file.",
+    "keywords": ["pdf", "read", "extract", "file", "text"]
+  },
+  {
+    "name": "extract_text_tool",
+    "input": {"file_path": "str", "type": "str"},
+    "output": {"content": "str"},
+    "description": "Extracts text from any file type (PDF, DOCX, TXT, etc.) by auto-detecting format.",
+    "keywords": ["extract", "text", "file", "auto", "generic", "document"]
+  },
+  {
+    "name": "parse_csv_tool",
+    "input": {"file_path": "str"},
+    "output": {"data": "list[dict]"},
+    "description": "Parses a CSV file and returns a list of row dictionaries.",
+    "keywords": ["csv", "parse", "spreadsheet", "table", "data", "file"]
+  },
+  {
+    "name": "summarize_text_tool",
+    "input": {"text": "str", "max_words": "int", "key_points": "int"},
+    "output": {"summary": "str", "key_points": "list[str]"},
+    "description": "Summarizes long text into key points and can limit summary to a maximum number of words.",
+    "keywords": ["summarize", "summary", "text", "shorten", "explain", "key points"]
+  },
+  {
+    "name": "extract_tables_tool",
+    "input": {"file_path": "str"},
+    "output": {"tables": "list[list[dict]]"},
+    "description": "Extracts all tables from a document or spreadsheet.",
+    "keywords": ["table", "extract", "spreadsheet", "document", "data"]
+  },
+  {
+    "name": "split_paragraphs_tool",
+    "input": {"text": "str"},
+    "output": {"paragraphs": "list[str]"},
+    "description": "Splits a block of text into paragraph units.",
+    "keywords": ["split", "paragraph", "text", "divide", "sections"]
+  },
+  {
+    "name": "remove_duplicates_tool",
+    "input": {"list_data": "list"},
+    "output": {"unique_list": "list"},
+    "description": "Deduplicates items in a list.",
+    "keywords": ["remove", "duplicates", "unique", "list", "deduplicate"]
+  },
+  {
+    "name": "search_keyword_tool",
+    "input": {"text": "str", "keyword": "str"},
+    "output": {"matches": "list[int]"},
+    "description": "Returns positions/indexes where the keyword appears.",
+    "keywords": ["search", "keyword", "find", "text", "match"]
+  },
+  {
+    "name": "merge_documents_tool",
+    "input": {"files": "list[str]"},
+    "output": {"merged_file": "str"},
+    "description": "Merges multiple documents into one.",
+    "keywords": ["merge", "combine", "documents", "files", "join"]
+  },
+  {
+    "name": "generate_summary_pdf_tool",
+    "input": {"text": "str"},
+    "output": {"pdf_file": "str"},
+    "description": "Creates a simple PDF from summary content.",
+    "keywords": ["pdf", "generate", "summary", "create", "file"]
+  },
+  {
+    "name": "filter_data_tool",
+    "input": {"data": "list[dict]", "condition": "str"},
+    "output": {"filtered": "list[dict]"},
+    "description": "Filters rows based on a logical condition.",
+    "keywords": ["filter", "data", "condition", "select", "rows"]
+  },
+  {
+    "name": "group_by_field_tool",
+    "input": {"data": "list[dict]", "field": "str"},
+    "output": {"grouped": "dict"},
+    "description": "Groups records by a specified key.",
+    "keywords": ["group", "field", "key", "records", "aggregate"]
+  },
+  {
+    "name": "sort_by_field_tool",
+    "input": {"data": "list[dict]", "field": "str", "order": "str"},
+    "output": {"sorted": "list[dict]"},
+    "description": "Sorts rows ascending/descending by field.",
+    "keywords": ["sort", "order", "field", "ascending", "descending"]
+  },
+  {
+    "name": "aggregate_data_tool",
+    "input": {"data": "list[dict]", "operation": "str", "field": "str"},
+    "output": {"result": "float"},
+    "description": "Performs aggregation like sum, avg, min, max.",
+    "keywords": ["aggregate", "sum", "average", "min", "max", "data"]
+  },
+  {
+    "name": "normalize_values_tool",
+    "input": {"values": "list[float]"},
+    "output": {"normalized": "list[float]"},
+    "description": "Scales values between 0 and 1.",
+    "keywords": ["normalize", "scale", "values", "range", "minmax"]
+  },
+  {
+    "name": "calculate_percent_change_tool",
+    "input": {"old": "float", "new": "float"},
+    "output": {"percent": "float"},
+    "description": "Calculates % change from old to new.",
+    "keywords": ["percent", "change", "calculate", "difference", "growth"]
+  },
+  {
+    "name": "pivot_table_tool",
+    "input": {"data": "list[dict]"},
+    "output": {"pivot": "list[dict]"},
+    "description": "Creates a pivot table from raw data.",
+    "keywords": ["pivot", "table", "data", "summarize", "cross-tab"]
+  },
+  {
+    "name": "detect_outliers_tool",
+    "input": {"data": "list[float]"},
+    "output": {"outliers": "list[float]"},
+    "description": "Returns a list of statistical outliers.",
+    "keywords": ["outlier", "detect", "anomaly", "statistics", "data"]
+  },
+  {
+    "name": "summarize_numeric_tool",
+    "input": {"data": "list[float]"},
+    "output": {"summary": "dict"},
+    "description": "Returns mean, median, mode, std-dev.",
+    "keywords": ["summarize", "numeric", "mean", "median", "mode", "statistics"]
+  },
+  {
+    "name": "top_n_values_tool",
+    "input": {"data": "list[float]", "n": "int"},
+    "output": {"top_values": "list"},
+    "description": "Returns the top N values from a provided list of numbers. The list must be explicitly provided by the user or produced by a previous step.",
+    "keywords": ["top", "values", "highest", "largest", "n"],
+    "constraints": "Can only be used if a list of numbers is provided by the user or a previous tool. Do not use for unrelated or unsupported queries."
+  },
+  {
+    "name": "send_email_tool",
+    "input": {"to": "str", "subject": "str", "content": "str", "attachments": "list[str]"},
+    "output": {"status": "str"},
+    "description": "Sends an email with optional attachments.",
+    "keywords": ["send", "email", "mail", "message", "attachments"]
+  },
+  {
+    "name": "generate_email_body_tool",
+    "input": {"summary": "str"},
+    "output": {"email": "str"},
+    "description": "Creates a formal email from a summary.",
+    "keywords": ["generate", "email", "body", "compose", "summary"]
+  },
+  {
+    "name": "translate_text_tool",
+    "input": {"text": "str", "to_lang": "str"},
+    "output": {"translated": "str"},
+    "description": "Translates text into a different language or multiple languages if a list is provided.",
+    "keywords": ["translate", "language", "text", "convert", "foreign", "multi-language"]
+  },
+  {
+    "name": "format_sms_tool",
+    "input": {"alert": "str"},
+    "output": {"sms_text": "str"},
+    "description": "Formats a short SMS message.",
+    "keywords": ["format", "sms", "message", "alert", "text"]
+  },
+  {
+    "name": "send_sms_tool",
+    "input": {"to": "str", "content": "str"},
+    "output": {"status": "str"},
+    "description": "Sends an SMS message to a phone number.",
+    "keywords": ["send", "sms", "text", "message", "phone"]
+  },
+  {
+    "name": "extract_emails_tool",
+    "input": {"text": "str"},
+    "output": {"emails": "list[str]"},
+    "description": "Extracts email addresses from text.",
+    "keywords": ["extract", "email", "find", "text", "address"]
+  },
+  {
+    "name": "validate_email_tool",
+    "input": {"email": "str"},
+    "output": {"is_valid": "bool"},
+    "description": "Checks if an email is valid syntactically.",
+    "keywords": ["validate", "email", "check", "syntax", "address"]
+  },
+  {
+    "name": "compose_newsletter_tool",
+    "input": {"updates": "list[str]"},
+    "output": {"newsletter": "str"},
+    "description": "Creates a markdown/email newsletter.",
+    "keywords": ["compose", "newsletter", "email", "markdown", "update"]
+  },
+  {
+    "name": "generate_invite_tool",
+    "input": {"event": "str", "date": "str"},
+    "output": {"invite_msg": "str"},
+    "description": "Returns a formal event invite text.",
+    "keywords": ["generate", "invite", "event", "message", "date"]
+  },
+  {
+    "name": "summarize_meeting_tool",
+    "input": {"transcript": "str"},
+    "output": {"summary": "str"},
+    "description": "Summarizes a meeting transcript.",
+    "keywords": ["summarize", "meeting", "transcript", "minutes", "notes"]
+  },
+  {
+    "name": "get_invoices_tool",
+    "input": {"month": "str"},
+    "output": {"invoices": "list[dict]"},
+    "description": "Returns all invoice records for a given month.",
+    "keywords": ["get", "invoices", "month", "records", "billing"]
+  },
+  {
+    "name": "calculate_invoice_total_tool",
+    "input": {"invoices": "list[dict]"},
+    "output": {"total": "float"},
+    "description": "Adds up the total amount across invoices.",
+    "keywords": ["calculate", "invoice", "total", "sum", "amount", "billing"]
+  },
+  {
+    "name": "generate_invoice_tool",
+    "input": {"client": "str", "items": "list[dict]"},
+    "output": {"invoice_pdf": "str"},
+    "description": "Creates a PDF invoice.",
+    "keywords": ["generate", "invoice", "pdf", "client", "create"]
+  },
+  {
+    "name": "track_expenses_tool",
+    "input": {"transactions": "list[dict]"},
+    "output": {"summary": "dict"},
+    "description": "Summarizes monthly spending.",
+    "keywords": ["track", "expenses", "spending", "transactions", "summary"]
+  },
+  {
+    "name": "budget_analysis_tool",
+    "input": {"budget": "float", "expenses": "list[float]"},
+    "output": {"analysis": "dict"},
+    "description": "Compares spending to budget.",
+    "keywords": ["budget", "analysis", "compare", "spending", "expenses"]
+  },
+  {
+    "name": "convert_currency_tool",
+    "input": {"amount": "float", "to": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts currency using exchange rates.",
+    "keywords": ["convert", "currency", "exchange", "amount", "money"]
+  },
+  {
+    "name": "forecast_sales_tool",
+    "input": {"past_data": "list[float]"},
+    "output": {"forecast": "float"},
+    "description": "Predicts next value using trend.",
+    "keywords": ["forecast", "sales", "predict", "trend", "future"]
+  },
+  {
+    "name": "generate_receipt_tool",
+    "input": {"purchase_info": "dict"},
+    "output": {"receipt": "str"},
+    "description": "Creates a receipt text.",
+    "keywords": ["generate", "receipt", "purchase", "text", "create"]
+  },
+  {
+    "name": "summarize_orders_tool",
+    "input": {"orders": "list[dict]"},
+    "output": {"summary": "dict"},
+    "description": "Summarizes orders by type or product.",
+    "keywords": ["summarize", "orders", "product", "type", "summary"]
+  },
+  {
+    "name": "validate_transaction_tool",
+    "input": {"transaction": "dict"},
+    "output": {"is_valid": "bool"},
+    "description": "Verifies a transaction record.",
+    "keywords": ["validate", "transaction", "verify", "record", "check"]
+  },
+  {
+    "name": "fetch_website_text_tool",
+    "input": {"url": "str"},
+    "output": {"text": "str"},
+    "description": "Scrapes main text content from a webpage.",
+    "keywords": ["fetch", "website", "text", "scrape", "webpage"]
+  },
+  {
+    "name": "get_weather_tool",
+    "input": {"city": "str"},
+    "output": {"weather": "dict"},
+    "description": "Gets the current weather for a city.",
+    "keywords": ["get", "weather", "city", "forecast"]
+  },
+  {
+    "name": "check_server_status_tool",
+    "input": {"url": "str"},
+    "output": {"status": "str"},
+    "description": "Pings a URL and returns status."
+  },
+  {
+    "name": "fetch_stock_price_tool",
+    "input": {"symbol": "str"},
+    "output": {"price": "float"},
+    "description": "Gets the latest stock price."
+  },
+  {
+    "name": "parse_html_tool",
+    "input": {"html": "str"},
+    "output": {"plain_text": "str"},
+    "description": "Removes tags, returns raw text."
+  },
+  {
+    "name": "shorten_url_tool",
+    "input": {"url": "str"},
+    "output": {"short_url": "str"},
+    "description": "Creates a shortened URL."
+  },
+  {
+    "name": "generate_qr_tool",
+    "input": {"data": "str"},
+    "output": {"qr_img": "str"},
+    "description": "Returns a QR code image path."
+  },
+  {
+    "name": "ip_lookup_tool",
+    "input": {"ip": "str"},
+    "output": {"location": "dict"},
+    "description": "Gets geolocation from IP."
+  },
+  {
+    "name": "search_google_tool",
+    "input": {"query": "str"},
+    "output": {"results": "list[str]"},
+    "description": "Returns top search result titles."
+  },
+  {
+    "name": "get_news_headlines_tool",
+    "input": {"topic": "str"},
+    "output": {"headlines": "list[str]"},
+    "description": "Fetches recent news headlines."
+  },
+  {
+    "name": "generate_answer_tool",
+    "input": {"question": "str"},
+    "output": {"answer": "str"},
+    "description": "Returns an answer using a QA model."
+  },
+  {
+    "name": "extract_entities_tool",
+    "input": {"text": "str"},
+    "output": {"entities": "list[str]"},
+    "description": "Performs named entity recognition."
+  },
+  {
+    "name": "classify_text_tool",
+    "input": {"text": "str"},
+    "output": {"label": "str"},
+    "description": "Categorizes text by topic."
+  },
+  {
+    "name": "compare_text_tool",
+    "input": {"a": "str", "b": "str"},
+    "output": {"similarity": "float"},
+    "description": "Returns a cosine/text similarity score."
+  },
+  {
+    "name": "generate_prompt_tool",
+    "input": {"task": "str"},
+    "output": {"prompt": "str"},
+    "description": "Crafts a detailed prompt from a short task."
+  },
+  {
+    "name": "summarize_code_tool",
+    "input": {"code": "str"},
+    "output": {"summary": "str"},
+    "description": "Explains what the code does."
+  },
+  {
+    "name": "generate_slug_tool",
+    "input": {"title": "str"},
+    "output": {"slug": "str"},
+    "description": "Converts a title into a URL-safe slug."
+  },
+  {
+    "name": "detect_language_tool",
+    "input": {"text": "str"},
+    "output": {"lang_code": "str"},
+    "description": "Identifies the language of a text."
+  },
+  {
+    "name": "random_password_tool",
+    "input": {"length": "int"},
+    "output": {"password": "str"},
+    "description": "Returns a secure password."
+  },
+  {
+    "name": "get_datetime_tool",
+    "input": {"timezone": "str"},
+    "output": {"timestamp": "str"},
+    "description": "Returns the current time in that timezone."
+  },
+  {
+    "name": "encode_base64_tool",
+    "input": {"text": "str"},
+    "output": {"encoded": "str"},
+    "description": "Encodes text to Base64 format.",
+    "keywords": ["encode", "base64", "text", "convert", "format"]
+  },
+  {
+    "name": "decode_base64_tool",
+    "input": {"encoded": "str"},
+    "output": {"text": "str"},
+    "description": "Decodes Base64 text to original format.",
+    "keywords": ["decode", "base64", "text", "convert", "format"]
+  },
+  {
+    "name": "hash_text_tool",
+    "input": {"text": "str", "algorithm": "str"},
+    "output": {"hash": "str"},
+    "description": "Generates hash using MD5, SHA256, etc.",
+    "keywords": ["hash", "text", "md5", "sha256", "encrypt"]
+  },
+  {
+    "name": "generate_uuid_tool",
+    "input": {},
+    "output": {"uuid": "str"},
+    "description": "Creates a unique identifier string.",
+    "keywords": ["generate", "uuid", "unique", "identifier", "id"]
+  },
+  {
+    "name": "calculate_distance_tool",
+    "input": {"lat1": "float", "lon1": "float", "lat2": "float", "lon2": "float"},
+    "output": {"distance": "float"},
+    "description": "Calculates distance between two coordinates.",
+    "keywords": ["calculate", "distance", "coordinates", "location", "gps"]
+  },
+  {
+    "name": "compress_text_tool",
+    "input": {"text": "str"},
+    "output": {"compressed": "str"},
+    "description": "Compresses text using gzip or similar.",
+    "keywords": ["compress", "text", "gzip", "reduce", "size"]
+  },
+  {
+    "name": "decompress_text_tool",
+    "input": {"compressed": "str"},
+    "output": {"text": "str"},
+    "description": "Decompresses previously compressed text.",
+    "keywords": ["decompress", "text", "gzip", "expand", "restore"]
+  },
+  {
+    "name": "validate_url_tool",
+    "input": {"url": "str"},
+    "output": {"is_valid": "bool"},
+    "description": "Checks if a URL is properly formatted.",
+    "keywords": ["validate", "url", "check", "format", "web"]
+  },
+  {
+    "name": "extract_domain_tool",
+    "input": {"url": "str"},
+    "output": {"domain": "str"},
+    "description": "Extracts domain name from a URL.",
+    "keywords": ["extract", "domain", "url", "parse", "web"]
+  },
+  {
+    "name": "format_phone_tool",
+    "input": {"phone": "str", "country": "str"},
+    "output": {"formatted": "str"},
+    "description": "Formats phone number for a country.",
+    "keywords": ["format", "phone", "number", "country", "validate"]
+  },
+  {
+    "name": "validate_credit_card_tool",
+    "input": {"number": "str"},
+    "output": {"is_valid": "bool"},
+    "description": "Validates credit card using Luhn algorithm.",
+    "keywords": ["validate", "credit", "card", "luhn", "payment"]
+  },
+  {
+    "name": "calculate_age_tool",
+    "input": {"birth_date": "str"},
+    "output": {"age": "int"},
+    "description": "Calculates age from birth date.",
+    "keywords": ["calculate", "age", "birth", "date", "years"]
+  },
+  {
+    "name": "format_date_tool",
+    "input": {"date": "str", "format": "str"},
+    "output": {"formatted": "str"},
+    "description": "Formats date string to specified format.",
+    "keywords": ["format", "date", "time", "convert", "string"]
+  },
+  {
+    "name": "add_days_tool",
+    "input": {"date": "str", "days": "int"},
+    "output": {"new_date": "str"},
+    "description": "Adds or subtracts days from a date.",
+    "keywords": ["add", "days", "date", "calculate", "time"]
+  },
+  {
+    "name": "days_between_tool",
+    "input": {"date1": "str", "date2": "str"},
+    "output": {"days": "int"},
+    "description": "Calculates days between two dates.",
+    "keywords": ["days", "between", "date", "difference", "calculate"]
+  },
+  {
+    "name": "is_weekend_tool",
+    "input": {"date": "str"},
+    "output": {"is_weekend": "bool"},
+    "description": "Checks if a date falls on weekend.",
+    "keywords": ["weekend", "date", "check", "saturday", "sunday"]
+  },
+  {
+    "name": "next_business_day_tool",
+    "input": {"date": "str"},
+    "output": {"next_date": "str"},
+    "description": "Finds next business day from given date.",
+    "keywords": ["next", "business", "day", "weekday", "calculate"]
+  },
+  {
+    "name": "timezone_convert_tool",
+    "input": {"datetime": "str", "from_tz": "str", "to_tz": "str"},
+    "output": {"converted": "str"},
+    "description": "Converts datetime between timezones.",
+    "keywords": ["timezone", "convert", "datetime", "time", "zone"]
+  },
+  {
+    "name": "parse_user_agent_tool",
+    "input": {"user_agent": "str"},
+    "output": {"parsed": "dict"},
+    "description": "Extracts browser/OS info from user agent.",
+    "keywords": ["parse", "user", "agent", "browser", "device"]
+  },
+  {
+    "name": "sanitize_filename_tool",
+    "input": {"filename": "str"},
+    "output": {"sanitized": "str"},
+    "description": "Removes invalid characters from filename.",
+    "keywords": ["sanitize", "filename", "clean", "valid", "characters"]
+  },
+  {
+    "name": "slugify_text_tool",
+    "input": {"text": "str"},
+    "output": {"slug": "str"},
+    "description": "Converts text to URL-friendly slug.",
+    "keywords": ["slugify", "text", "url", "friendly", "convert"]
+  },
+  {
+    "name": "word_count_tool",
+    "input": {"text": "str"},
+    "output": {"count": "int"},
+    "description": "Counts words in a text string.",
+    "keywords": ["word", "count", "text", "analyze", "length"]
+  },
+  {
+    "name": "character_count_tool",
+    "input": {"text": "str"},
+    "output": {"count": "int"},
+    "description": "Counts characters in a text string.",
+    "keywords": ["character", "count", "text", "length", "size"]
+  },
+  {
+    "name": "sentence_count_tool",
+    "input": {"text": "str"},
+    "output": {"count": "int"},
+    "description": "Counts sentences in a text string.",
+    "keywords": ["sentence", "count", "text", "analyze", "grammar"]
+  },
+  {
+    "name": "extract_keywords_tool",
+    "input": {"text": "str", "count": "int"},
+    "output": {"keywords": "list[str]"},
+    "description": "Extracts top keywords from text.",
+    "keywords": ["extract", "keywords", "text", "analyze", "terms"]
+  },
+  {
+    "name": "reading_time_tool",
+    "input": {"text": "str"},
+    "output": {"minutes": "int"},
+    "description": "Estimates reading time for text.",
+    "keywords": ["reading", "time", "text", "estimate", "minutes"]
+  },
+  {
+    "name": "reverse_text_tool",
+    "input": {"text": "str"},
+    "output": {"reversed": "str"},
+    "description": "Reverses the order of characters in text.",
+    "keywords": ["reverse", "text", "string", "backwards", "flip"]
+  },
+  {
+    "name": "capitalize_words_tool",
+    "input": {"text": "str"},
+    "output": {"capitalized": "str"},
+    "description": "Capitalizes first letter of each word.",
+    "keywords": ["capitalize", "words", "text", "title", "case"]
+  },
+  {
+    "name": "remove_whitespace_tool",
+    "input": {"text": "str"},
+    "output": {"trimmed": "str"},
+    "description": "Removes extra whitespace from text.",
+    "keywords": ["remove", "whitespace", "text", "trim", "clean"]
+  },
+  {
+    "name": "replace_text_tool",
+    "input": {"text": "str", "find": "str", "replace": "str"},
+    "output": {"replaced": "str"},
+    "description": "Replaces all occurrences of text.",
+    "keywords": ["replace", "text", "find", "substitute", "change"]
+  },
+  {
+    "name": "extract_numbers_tool",
+    "input": {"text": "str"},
+    "output": {"numbers": "list[float]"},
+    "description": "Extracts all numbers from text.",
+    "keywords": ["extract", "numbers", "text", "parse", "digits"]
+  },
+  {
+    "name": "color_hex_to_rgb_tool",
+    "input": {"hex": "str"},
+    "output": {"rgb": "dict"},
+    "description": "Converts hex color to RGB values.",
+    "keywords": ["color", "hex", "rgb", "convert", "format"]
+  },
+  {
+    "name": "color_rgb_to_hex_tool",
+    "input": {"r": "int", "g": "int", "b": "int"},
+    "output": {"hex": "str"},
+    "description": "Converts RGB color to hex format.",
+    "keywords": ["color", "rgb", "hex", "convert", "format"]
+  },
+  {
+    "name": "generate_color_palette_tool",
+    "input": {"base_color": "str", "count": "int"},
+    "output": {"palette": "list[str]"},
+    "description": "Generates color palette from base color.",
+    "keywords": ["generate", "color", "palette", "scheme", "design"]
+  },
+  {
+    "name": "image_resize_tool",
+    "input": {"image_path": "str", "width": "int", "height": "int"},
+    "output": {"resized_path": "str"},
+    "description": "Resizes an image to specified dimensions.",
+    "keywords": ["image", "resize", "dimensions", "scale", "photo"]
+  },
+  {
+    "name": "image_crop_tool",
+    "input": {"image_path": "str", "x": "int", "y": "int", "width": "int", "height": "int"},
+    "output": {"cropped_path": "str"},
+    "description": "Crops an image to specified area.",
+    "keywords": ["image", "crop", "cut", "area", "photo"]
+  },
+  {
+    "name": "image_rotate_tool",
+    "input": {"image_path": "str", "degrees": "int"},
+    "output": {"rotated_path": "str"},
+    "description": "Rotates an image by specified degrees.",
+    "keywords": ["image", "rotate", "degrees", "turn", "photo"]
+  },
+  {
+    "name": "image_metadata_tool",
+    "input": {"image_path": "str"},
+    "output": {"metadata": "dict"},
+    "description": "Extracts metadata from image file.",
+    "keywords": ["image", "metadata", "exif", "info", "photo"]
+  },
+  {
+    "name": "pdf_merge_tool",
+    "input": {"pdf_files": "list[str]"},
+    "output": {"merged_path": "str"},
+    "description": "Merges multiple PDF files into one.",
+    "keywords": ["pdf", "merge", "combine", "files", "document"]
+  },
+  {
+    "name": "pdf_split_tool",
+    "input": {"pdf_path": "str", "pages": "list[int]"},
+    "output": {"split_files": "list[str]"},
+    "description": "Splits PDF into separate files by pages.",
+    "keywords": ["pdf", "split", "pages", "separate", "document"]
+  },
+  {
+    "name": "pdf_encrypt_tool",
+    "input": {"pdf_path": "str", "password": "str"},
+    "output": {"encrypted_path": "str"},
+    "description": "Encrypts PDF with password protection.",
+    "keywords": ["pdf", "encrypt", "password", "protect", "security"]
+  },
+  {
+    "name": "pdf_page_count_tool",
+    "input": {"pdf_path": "str"},
+    "output": {"count": "int"},
+    "description": "Counts total pages in PDF file.",
+    "keywords": ["pdf", "page", "count", "total", "document"]
+  },
+  {
+    "name": "zip_files_tool",
+    "input": {"files": "list[str]", "zip_name": "str"},
+    "output": {"zip_path": "str"},
+    "description": "Creates ZIP archive from multiple files.",
+    "keywords": ["zip", "archive", "compress", "files", "package"]
+  },
+  {
+    "name": "unzip_files_tool",
+    "input": {"zip_path": "str", "extract_to": "str"},
+    "output": {"extracted_files": "list[str]"},
+    "description": "Extracts files from ZIP archive.",
+    "keywords": ["unzip", "extract", "archive", "files", "decompress"]
+  },
+  {
+    "name": "file_size_tool",
+    "input": {"file_path": "str"},
+    "output": {"size_bytes": "int"},
+    "description": "Gets file size in bytes.",
+    "keywords": ["file", "size", "bytes", "info", "storage"]
+  },
+  {
+    "name": "file_type_tool",
+    "input": {"file_path": "str"},
+    "output": {"type": "str"},
+    "description": "Determines file type from extension/content.",
+    "keywords": ["file", "type", "extension", "format", "mime"]
+  },
+  {
+    "name": "backup_file_tool",
+    "input": {"file_path": "str"},
+    "output": {"backup_path": "str"},
+    "description": "Creates backup copy of a file.",
+    "keywords": ["backup", "file", "copy", "save", "duplicate"]
+  },
+  {
+    "name": "delete_file_tool",
+    "input": {"file_path": "str"},
+    "output": {"deleted": "bool"},
+    "description": "Safely deletes a file from system.",
+    "keywords": ["delete", "file", "remove", "cleanup", "storage"]
+  },
+  {
+    "name": "list_directory_tool",
+    "input": {"directory": "str"},
+    "output": {"files": "list[str]"},
+    "description": "Lists all files in a directory.",
+    "keywords": ["list", "directory", "files", "folder", "browse"]
+  },
+  {
+    "name": "create_directory_tool",
+    "input": {"path": "str"},
+    "output": {"created": "bool"},
+    "description": "Creates a new directory.",
+    "keywords": ["create", "directory", "folder", "path", "make"]
+  },
+  {
+    "name": "system_info_tool",
+    "input": {},
+    "output": {"info": "dict"},
+    "description": "Gets system information (OS, CPU, memory).",
+    "keywords": ["system", "info", "os", "cpu", "memory"]
+  },
+  {
+    "name": "disk_usage_tool",
+    "input": {"path": "str"},
+    "output": {"usage": "dict"},
+    "description": "Gets disk space usage for path.",
+    "keywords": ["disk", "usage", "space", "storage", "free"]
+  },
+  {
+    "name": "process_list_tool",
+    "input": {},
+    "output": {"processes": "list[dict]"},
+    "description": "Lists running system processes.",
+    "keywords": ["process", "list", "running", "system", "tasks"]
+  },
+  {
+    "name": "network_ping_tool",
+    "input": {"host": "str"},
+    "output": {"response_time": "float"},
+    "description": "Pings host and returns response time.",
+    "keywords": ["network", "ping", "host", "response", "time"]
+  },
+  {
+    "name": "port_scan_tool",
+    "input": {"host": "str", "ports": "list[int]"},
+    "output": {"open_ports": "list[int]"},
+    "description": "Scans for open ports on host.",
+    "keywords": ["port", "scan", "host", "open", "network"]
+  },
+  {
+    "name": "dns_lookup_tool",
+    "input": {"domain": "str"},
+    "output": {"ip_address": "str"},
+    "description": "Resolves domain name to IP address.",
+    "keywords": ["dns", "lookup", "domain", "ip", "resolve"]
+  },
+  {
+    "name": "generate_barcode_tool",
+    "input": {"data": "str", "format": "str"},
+    "output": {"barcode_path": "str"},
+    "description": "Generates barcode image from data.",
+    "keywords": ["generate", "barcode", "image", "data", "code"]
+  },
+  {
+    "name": "read_barcode_tool",
+    "input": {"image_path": "str"},
+    "output": {"data": "str"},
+    "description": "Reads data from barcode image.",
+    "keywords": ["read", "barcode", "image", "decode", "scan"]
+  },
+  {
+    "name": "text_to_speech_tool",
+    "input": {"text": "str", "voice": "str"},
+    "output": {"audio_path": "str"},
+    "description": "Converts text to speech audio file.",
+    "keywords": ["text", "speech", "audio", "voice", "convert"]
+  },
+  {
+    "name": "speech_to_text_tool",
+    "input": {"audio_path": "str"},
+    "output": {"text": "str"},
+    "description": "Converts speech audio to text.",
+    "keywords": ["speech", "text", "audio", "transcribe", "convert"]
+  },
+  {
+    "name": "audio_duration_tool",
+    "input": {"audio_path": "str"},
+    "output": {"duration": "float"},
+    "description": "Gets duration of audio file in seconds.",
+    "keywords": ["audio", "duration", "length", "time", "seconds"]
+  },
+  {
+    "name": "audio_convert_tool",
+    "input": {"audio_path": "str", "format": "str", "from_video": "bool"},
+    "output": {"converted_path": "str"},
+    "description": "Converts audio between formats or extracts audio from video files.",
+    "keywords": ["audio", "convert", "format", "mp3", "wav", "video-to-audio"]
+  },
+  {
+    "name": "video_info_tool",
+    "input": {"video_path": "str"},
+    "output": {"info": "dict"},
+    "description": "Gets video file information and metadata.",
+    "keywords": ["video", "info", "metadata", "resolution", "duration"]
+  },
+  {
+    "name": "video_thumbnail_tool",
+    "input": {"video_path": "str", "timestamp": "float"},
+    "output": {"thumbnail_path": "str"},
+    "description": "Extracts thumbnail from video at timestamp.",
+    "keywords": ["video", "thumbnail", "extract", "frame", "image"]
+  },
+  {
+    "name": "batch_rename_tool",
+    "input": {"files": "list[str]", "pattern": "str", "to_lowercase": "bool"},
+    "output": {"renamed": "list[str]"},
+    "description": "Renames multiple files using a pattern. Optionally converts filenames to lowercase.",
+    "keywords": ["batch", "rename", "files", "pattern", "multiple", "lowercase"]
+  },
+  {
+    "name": "find_replace_files_tool",
+    "input": {"directory": "str", "find": "str", "replace": "str"},
+    "output": {"modified": "list[str]"},
+    "description": "Find and replace text across files in directory.",
+    "keywords": ["find", "replace", "files", "directory", "text"]
+  },
+  {
+    "name": "duplicate_finder_tool",
+    "input": {"directory": "str"},
+    "output": {"duplicates": "list[list[str]]"},
+    "description": "Finds duplicate files in directory.",
+    "keywords": ["duplicate", "finder", "files", "directory", "similar"]
+  },
+  {
+    "name": "checksum_tool",
+    "input": {"file_path": "str", "algorithm": "str"},
+    "output": {"checksum": "str"},
+    "description": "Calculates file checksum using algorithm.",
+    "keywords": ["checksum", "file", "hash", "verify", "integrity"]
+  },
+  {
+    "name": "monitor_file_tool",
+    "input": {"file_path": "str"},
+    "output": {"changes": "list[dict]"},
+    "description": "Monitors file for changes over time.",
+    "keywords": ["monitor", "file", "changes", "watch", "track"]
+  },
+  {
+    "name": "log_parser_tool",
+    "input": {"log_path": "str", "pattern": "str"},
+    "output": {"matches": "list[dict]"},
+    "description": "Parses log files for specific patterns.",
+    "keywords": ["log", "parser", "pattern", "analyze", "extract"]
+  },
+  {
+    "name": "performance_timer_tool",
+    "input": {"function_name": "str"},
+    "output": {"execution_time": "float"},
+    "description": "Measures function execution time.",
+    "keywords": ["performance", "timer", "execution", "time", "benchmark"]
+  },
+  {
+    "name": "memory_usage_tool",
+    "input": {},
+    "output": {"usage": "dict"},
+    "description": "Gets current memory usage statistics.",
+    "keywords": ["memory", "usage", "ram", "statistics", "system"]
+  },
+  {
+    "name": "cpu_usage_tool",
+    "input": {},
+    "output": {"usage": "float"},
+    "description": "Gets current CPU usage percentage.",
+    "keywords": ["cpu", "usage", "processor", "percentage", "system"]
+  },
+  {
+    "name": "temperature_convert_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts temperature between units.",
+    "keywords": ["temperature", "convert", "celsius", "fahrenheit", "kelvin"]
+  },
+  {
+    "name": "distance_convert_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts distance between units.",
+    "keywords": ["distance", "convert", "meters", "feet", "miles"]
+  },
+  {
+    "name": "weight_convert_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts weight between units.",
+    "keywords": ["weight", "convert", "kilograms", "pounds", "grams"]
+  },
+  {
+    "name": "volume_convert_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts volume between units.",
+    "keywords": ["volume", "convert", "liters", "gallons", "milliliters"]
+  },
+  {
+    "name": "area_convert_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts area between units.",
+    "keywords": ["area", "convert", "square", "meters", "feet"]
+  },
+  {
+    "name": "speed_convert_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts speed between units.",
+    "keywords": ["speed", "convert", "mph", "kmh", "velocity"]
+  },
+  {
+    "name": "angle_convert_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts angles between degrees and radians.",
+    "keywords": ["angle", "convert", "degrees", "radians", "rotation"]
+  },
+  {
+    "name": "percentage_calculator_tool",
+    "input": {"part": "float", "whole": "float"},
+    "output": {"percentage": "float"},
+    "description": "Calculates percentage from part and whole.",
+    "keywords": ["percentage", "calculate", "part", "whole", "ratio"]
+  },
+  {
+    "name": "compound_interest_tool",
+    "input": {"principal": "float", "rate": "float", "time": "float", "compound": "int"},
+    "output": {"amount": "float"},
+    "description": "Calculates compound interest.",
+    "keywords": ["compound", "interest", "calculate", "finance", "investment"]
+  },
+  {
+    "name": "loan_payment_tool",
+    "input": {"loan_amount": "float", "rate": "float", "months": "int"},
+    "output": {"payment": "float"},
+    "description": "Calculates monthly loan payment.",
+    "keywords": ["loan", "payment", "monthly", "calculate", "finance"]
+  },
+  {
+    "name": "tax_calculator_tool",
+    "input": {"income": "float", "rate": "float"},
+    "output": {"tax": "float"},
+    "description": "Calculates tax amount from income and rate.",
+    "keywords": ["tax", "calculate", "income", "rate", "finance"]
+  },
+  {
+    "name": "tip_calculator_tool",
+    "input": {"bill": "float", "percentage": "float"},
+    "output": {"tip": "float"},
+    "description": "Calculates tip amount for a bill.",
+    "keywords": ["tip", "calculate", "bill", "percentage", "service"]
+  },
+  {
+    "name": "bmi_calculator_tool",
+    "input": {"weight": "float", "height": "float", "unit": "str"},
+    "output": {"bmi": "float"},
+    "description": "Calculates Body Mass Index.",
+    "keywords": ["bmi", "calculate", "weight", "height", "health"]
+  },
+  {
+    "name": "calorie_calculator_tool",
+    "input": {"age": "int", "gender": "str", "weight": "float", "height": "float", "activity": "str"},
+    "output": {"calories": "float"},
+    "description": "Calculates daily calorie needs.",
+    "keywords": ["calorie", "calculate", "daily", "needs", "health"]
+  },
+  {
+    "name": "password_strength_tool",
+    "input": {"password": "str"},
+    "output": {"strength": "str", "score": "int"},
+    "description": "Evaluates password strength and security.",
+    "keywords": ["password", "strength", "security", "evaluate", "score"]
+  },
+  {
+    "name": "regex_test_tool",
+    "input": {"pattern": "str", "text": "str"},
+    "output": {"matches": "list[str]"},
+    "description": "Tests regex pattern against text.",
+    "keywords": ["regex", "test", "pattern", "match", "text"]
+  },
+  {
+    "name": "json_validator_tool",
+    "input": {"json_string": "str"},
+    "output": {"is_valid": "bool", "error": "str"},
+    "description": "Validates JSON string format.",
+    "keywords": ["json", "validate", "format", "check", "syntax"]
+  },
+  {
+    "name": "xml_validator_tool",
+    "input": {"xml_string": "str"},
+    "output": {"is_valid": "bool", "error": "str"},
+    "description": "Validates XML string format.",
+    "keywords": ["xml", "validate", "format", "check", "syntax"]
+  },
+  {
+    "name": "markdown_to_html_tool",
+    "input": {"markdown": "str"},
+    "output": {"html": "str"},
+    "description": "Converts Markdown text to HTML.",
+    "keywords": ["markdown", "html", "convert", "format", "text"]
+  },
+  {
+    "name": "html_to_text_tool",
+    "input": {"html": "str"},
+    "output": {"text": "str"},
+    "description": "Extracts plain text from HTML.",
+    "keywords": ["html", "text", "extract", "plain", "convert"]
+  },
+  {
+    "name": "css_minify_tool",
+    "input": {"css": "str"},
+    "output": {"minified": "str"},
+    "description": "Minifies CSS code by removing whitespace.",
+    "keywords": ["css", "minify", "compress", "optimize", "code"]
+  },
+  {
+    "name": "js_minify_tool",
+    "input": {"javascript": "str"},
+    "output": {"minified": "str"},
+    "description": "Minifies JavaScript code.",
+    "keywords": ["javascript", "minify", "compress", "optimize", "code"]
+  },
+  {
+    "name": "code_formatter_tool",
+    "input": {"code": "str", "language": "str"},
+    "output": {"formatted": "str"},
+    "description": "Formats code with proper indentation.",
+    "keywords": ["code", "format", "indent", "style", "beautify"]
+  },
+  {
+    "name": "syntax_highlighter_tool",
+    "input": {"code": "str", "language": "str"},
+    "output": {"highlighted": "str"},
+    "description": "Adds syntax highlighting to code.",
+    "keywords": ["syntax", "highlight", "code", "color", "format"]
+  },
+  {
+    "name": "diff_tool",
+    "input": {"text1": "str", "text2": "str"},
+    "output": {"diff": "str"},
+    "description": "Shows differences between two texts.",
+    "keywords": ["diff", "compare", "text", "changes", "difference"]
+  },
+  {
+    "name": "merge_conflict_resolver_tool",
+    "input": {"conflicted_text": "str"},
+    "output": {"resolved": "str"},
+    "description": "Helps resolve merge conflicts in text.",
+    "keywords": ["merge", "conflict", "resolve", "git", "text"]
+  },
+  {
+    "name": "schedule_event_tool",
+    "input": {"title": "str", "date": "str", "time": "str", "location": "str"},
+    "output": {"event_id": "str"},
+    "description": "Schedules a calendar event with title, date, time, and location.",
+    "keywords": ["schedule", "event", "calendar", "meeting", "reminder"]
+  },
+  {
+    "name": "todo_list_tool",
+    "input": {"tasks": "list[str]"},
+    "output": {"todo_id": "str"},
+    "description": "Creates a to-do list from a set of tasks.",
+    "keywords": ["todo", "list", "tasks", "organize", "plan", "overdue", "reminder", "deadline", "responsible"]
+  },
+  {
+    "name": "deadline_reminder_tool",
+    "input": {"task": "str", "deadline": "str"},
+    "output": {"reminder_id": "str"},
+    "description": "Sets a reminder for a task with a deadline.",
+    "keywords": ["reminder", "deadline", "task", "alert", "notify", "overdue", "responsible"]
+  },
+  {
+    "name": "summarize_webpage_tool",
+    "input": {"url": "str"},
+    "output": {"summary": "str"},
+    "description": "Summarizes the main content of a webpage.",
+    "keywords": ["summarize", "webpage", "url", "content", "extract"]
+  },
+  {
+    "name": "extract_references_tool",
+    "input": {"text": "str"},
+    "output": {"references": "list[str]"},
+    "description": "Extracts references or citations from academic text.",
+    "keywords": ["extract", "references", "citations", "academic", "text"]
+  },
+  {
+    "name": "brainstorm_ideas_tool",
+    "input": {"topic": "str"},
+    "output": {"ideas": "list[str]"},
+    "description": "Generates a list of creative ideas for a given topic.",
+    "keywords": ["brainstorm", "ideas", "creative", "topic", "generate"]
+  },
+  {
+    "name": "generate_study_plan_tool",
+    "input": {"subject": "str", "duration_days": "int"},
+    "output": {"plan": "list[dict]"},
+    "description": "Creates a structured study plan for a subject over a number of days.",
+    "keywords": ["study", "plan", "subject", "schedule", "days"]
+  },
+  {
+    "name": "find_scholar_articles_tool",
+    "input": {"query": "str"},
+    "output": {"articles": "list[dict]"},
+    "description": "Finds relevant scholarly articles for a research query.",
+    "keywords": ["find", "scholar", "articles", "research", "query"]
+  },
+  {
+    "name": "motivational_quote_tool",
+    "input": {"topic": "str"},
+    "output": {"quote": "str"},
+    "description": "Returns a motivational quote for a given topic.",
+    "keywords": ["motivational", "quote", "inspire", "topic", "encourage"]
+  },
+  {
+    "name": "meeting_minutes_tool",
+    "input": {"transcript": "str"},
+    "output": {"minutes": "str"},
+    "description": "Generates concise meeting minutes from a transcript.",
+    "keywords": ["meeting", "minutes", "transcript", "summary", "notes"]
+  },
+  {
+    "name": "plagiarism_checker_tool",
+    "input": {"text": "str"},
+    "output": {"plagiarism_score": "float", "sources": "list[str]"},
+    "description": "Checks text for plagiarism and lists matching sources.",
+    "keywords": ["plagiarism", "check", "sources", "text", "originality"]
+  },
+  {
+    "name": "flashcard_generator_tool",
+    "input": {"notes": "str"},
+    "output": {"flashcards": "list[dict]"},
+    "description": "Generates flashcards from study notes.",
+    "keywords": ["flashcard", "generate", "study", "notes", "quiz"]
+  },
+  {
+    "name": "quiz_generator_tool",
+    "input": {"topic": "str", "num_questions": "int"},
+    "output": {"quiz": "list[dict]"},
+    "description": "Creates a quiz on a topic with a specified number of questions.",
+    "keywords": ["quiz", "generate", "topic", "questions", "test"]
+  },
+  {
+    "name": "citation_formatter_tool",
+    "input": {"reference": "str", "style": "str"},
+    "output": {"formatted_citation": "str"},
+    "description": "Formats a reference in a given citation style (APA, MLA, etc).",
+    "keywords": ["citation", "format", "reference", "style", "bibliography"]
+  },
+  {
+    "name": "syllabus_analyzer_tool",
+    "input": {"syllabus_text": "str"},
+    "output": {"key_dates": "list[str]", "topics": "list[str]"},
+    "description": "Extracts key dates and topics from a syllabus.",
+    "keywords": ["syllabus", "analyze", "dates", "topics", "extract"]
+  },
+  {
+    "name": "focus_timer_tool",
+    "input": {"duration_minutes": "int"},
+    "output": {"timer_id": "str"},
+    "description": "Starts a focus timer for a set duration.",
+    "keywords": ["focus", "timer", "productivity", "pomodoro", "duration"]
+  },
+  {
+    "name": "distraction_blocker_tool",
+    "input": {"websites": "list[str]", "duration_minutes": "int"},
+    "output": {"block_id": "str"},
+    "description": "Blocks distracting websites for a set time.",
+    "keywords": ["distraction", "block", "websites", "focus", "productivity"]
+  },
+  {
+    "name": "daily_journal_tool",
+    "input": {"entry": "str"},
+    "output": {"journal_id": "str"},
+    "description": "Saves a daily journal entry.",
+    "keywords": ["journal", "daily", "entry", "log", "reflection"]
+  },
+  {
+    "name": "project_tracker_tool",
+    "input": {"project_name": "str", "tasks": "list[str]"},
+    "output": {"tracker_id": "str"},
+    "description": "Creates a tracker for project tasks.",
+    "keywords": ["project", "tracker", "tasks", "progress", "manage"]
+  },
+  {
+    "name": "time_tracker_tool",
+    "input": {"activity": "str", "duration_minutes": "int"},
+    "output": {"log_id": "str"},
+    "description": "Logs time spent on an activity.",
+    "keywords": ["time", "tracker", "activity", "log", "duration"]
+  },
+  {
+    "name": "goal_setter_tool",
+    "input": {"goal": "str", "deadline": "str"},
+    "output": {"goal_id": "str"},
+    "description": "Sets a personal or academic goal with a deadline.",
+    "keywords": ["goal", "set", "deadline", "personal", "academic"]
+  },
+  {
+    "name": "meeting_scheduler_tool",
+    "input": {"participants": "list[str]", "date": "str", "time": "str"},
+    "output": {"meeting_id": "str"},
+    "description": "Schedules a meeting with participants.",
+    "keywords": ["meeting", "schedule", "participants", "calendar", "invite"]
+  },
+  {
+    "name": "feedback_generator_tool",
+    "input": {"work": "str", "criteria": "str"},
+    "output": {"feedback": "str"},
+    "description": "Generates constructive feedback for submitted work.",
+    "keywords": ["feedback", "generate", "work", "criteria", "review"]
+  },
+  {
+    "name": "polite_rephraser_tool",
+    "input": {"text": "str"},
+    "output": {"polite_text": "str"},
+    "description": "Rephrases text to be more polite and professional.",
+    "keywords": ["polite", "rephrase", "text", "professional", "tone"]
+  },
+  {
+    "name": "group_poll_creator_tool",
+    "input": {"question": "str", "options": "list[str]"},
+    "output": {"poll_id": "str"},
+    "description": "Creates a poll for group decision-making.",
+    "keywords": ["group", "poll", "create", "decision", "vote"]
+  },
+  {
+    "name": "rsvp_tracker_tool",
+    "input": {"event": "str", "invitees": "list[str]"},
+    "output": {"rsvp_list": "list[dict]"},
+    "description": "Tracks RSVPs for an event.",
+    "keywords": ["rsvp", "track", "event", "invitees", "attendance"]
+  },
+  {
+    "name": "image_to_text_tool",
+    "input": {"image_path": "str"},
+    "output": {"text": "str"},
+    "description": "Extracts text from an image using OCR.",
+    "keywords": ["image", "text", "ocr", "extract", "photo"]
+  },
+  {
+    "name": "audio_summarizer_tool",
+    "input": {"audio_path": "str"},
+    "output": {"summary": "str"},
+    "description": "Summarizes the content of an audio file.",
+    "keywords": ["audio", "summarize", "content", "file", "speech"]
+  },
+  {
+    "name": "video_summarizer_tool",
+    "input": {"video_path": "str"},
+    "output": {"summary": "str"},
+    "description": "Summarizes the content of a video file.",
+    "keywords": ["video", "summarize", "content", "file", "movie"]
+  },
+  {
+    "name": "file_converter_tool",
+    "input": {"file_path": "str", "to_format": "str"},
+    "output": {"converted_path": "str"},
+    "description": "Converts a file to a different format.",
+    "keywords": ["file", "convert", "format", "type", "change"]
+  },
+  {
+    "name": "file_comparer_tool",
+    "input": {"file1": "str", "file2": "str"},
+    "output": {"differences": "str"},
+    "description": "Compares two files and lists differences.",
+    "keywords": ["file", "compare", "differences", "content", "check"]
+  },
+  {
+    "name": "graph_plotter_tool",
+    "input": {"data": "list[float]", "type": "str", "output_format": "str"},
+    "output": {"graph_path": "str"},
+    "description": "Plots a graph from data (line, bar, etc) and can export as PNG or other formats.",
+    "keywords": ["graph", "plot", "data", "visualize", "chart", "png"]
+  },
+  {
+    "name": "equation_solver_tool",
+    "input": {"equation": "str"},
+    "output": {"solution": "str"},
+    "description": "Solves a mathematical equation.",
+    "keywords": ["equation", "solve", "math", "calculate", "solution"]
+  },
+  {
+    "name": "data_visualizer_tool",
+    "input": {"data": "list[dict]", "chart_type": "str"},
+    "output": {"chart_path": "str"},
+    "description": "Visualizes data as a chart or graph.",
+    "keywords": ["data", "visualize", "chart", "graph", "plot"]
+  },
+  {
+    "name": "advanced_unit_converter_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts between a wide range of units.",
+    "keywords": ["unit", "convert", "advanced", "value", "measurement"]
+  },
+  {
+    "name": "gpa_calculator_tool",
+    "input": {"grades": "list[float]", "credits": "list[float]"},
+    "output": {"gpa": "float"},
+    "description": "Calculates GPA from grades and credits.",
+    "keywords": ["gpa", "calculate", "grades", "credits", "average"]
+  },
+  {
+    "name": "mood_tracker_tool",
+    "input": {"mood": "str", "notes": "str"},
+    "output": {"entry_id": "str"},
+    "description": "Logs mood and notes for wellbeing tracking.",
+    "keywords": ["mood", "track", "wellbeing", "log", "notes"]
+  },
+  {
+    "name": "break_reminder_tool",
+    "input": {"interval_minutes": "int"},
+    "output": {"reminder_id": "str"},
+    "description": "Sets a reminder to take regular breaks.",
+    "keywords": ["break", "reminder", "interval", "rest", "notify"]
+  },
+  {
+    "name": "healthy_habit_suggester_tool",
+    "input": {"goal": "str"},
+    "output": {"suggestions": "list[str]"},
+    "description": "Suggests healthy habits based on a goal.",
+    "keywords": ["healthy", "habit", "suggest", "goal", "wellbeing"]
+  },
+  {
+    "name": "gratitude_logger_tool",
+    "input": {"entry": "str"},
+    "output": {"log_id": "str"},
+    "description": "Logs a gratitude entry for positive psychology.",
+    "keywords": ["gratitude", "log", "entry", "positive", "psychology"]
+  },
+  {
+    "name": "stress_level_estimator_tool",
+    "input": {"responses": "list[int]"},
+    "output": {"stress_score": "float"},
+    "description": "Estimates stress level based on questionnaire responses.",
+    "keywords": ["stress", "level", "estimate", "questionnaire", "score"]
+  },
+  {
+    "name": "calculate_average_tool",
+    "input": {"data": "list[float]"},
+    "output": {"average": "float"},
+    "description": "Calculates the average of a list of numbers.",
+    "keywords": ["average", "mean", "calculate", "data", "calculateAverageTool"]
+  },
+  {
+    "name": "arxiv_search_tool",
+    "input": {"query": "str"},
+    "output": {"results": "list[dict]"},
+    "description": "Searches arXiv for relevant articles.",
+    "keywords": ["arxiv", "search", "articles", "papers", "arxivSearchTool"]
+  },
+  {
+    "name": "save_to_markdown_tool",
+    "input": {"content": "str", "file_name": "str"},
+    "output": {"markdown_file": "str"},
+    "description": "Saves content to a Markdown (.md) file.",
+    "keywords": ["save", "markdown", "file", "write", "saveToMarkdownTool"]
+  },
+  {
+    "name": "convert_units_tool",
+    "input": {"value": "float", "from_unit": "str", "to_unit": "str"},
+    "output": {"converted": "float"},
+    "description": "Converts a value from one unit to another.",
+    "keywords": ["convert", "units", "unit", "conversion", "convertUnitsTool"]
+  },
+  {
+    "name": "parse_text_tool",
+    "input": {"file_path": "str"},
+    "output": {"text": "str"},
+    "description": "Extracts plain text from a file.",
+    "keywords": ["parse", "text", "extract", "file", "extractTextTool"]
+  },
+  {
+    "name": "calculate_sum_tool",
+    "input": {"data": "list[float]"},
+    "output": {"sum": "float"},
+    "description": "Calculates the sum of a list of numbers.",
+    "keywords": ["sum", "total", "calculate", "data", "calculateSumTool"]
+  },
+  {
+    "name": "send_to_dashboard_tool",
+    "input": {"data": "dict", "dashboard_id": "str"},
+    "output": {"status": "str"},
+    "description": "Sends data to a specified dashboard.",
+    "keywords": ["send", "dashboard", "data", "report", "sendToDashboardTool"]
+  },
+  {
+    "name": "read_applications_tool",
+    "input": {"file_path": "str"},
+    "output": {"applications": "list[dict]"},
+    "description": "Reads job applications from a file.",
+    "keywords": ["read", "applications", "job", "file", "readApplicationsTool"]
+  },
+  {
+    "name": "write_csv_tool",
+    "input": {"data": "list[dict]", "file_name": "str"},
+    "output": {"csv_file": "str"},
+    "description": "Writes data to a CSV file.",
+    "keywords": ["write", "csv", "file", "save", "writeCSVTool"]
+  },
+  {
+    "name": "get_emails_tool",
+    "input": {"count": "int"},
+    "output": {"emails": "list[dict]"},
+    "description": "Retrieves the last N received emails.",
+    "keywords": ["get", "emails", "retrieve", "inbox", "getEmailsTool"]
+  },
+  {
+    "name": "send_slack_message_tool",
+    "input": {"channel": "str", "content": "str"},
+    "output": {"status": "str"},
+    "description": "Sends a message to a Slack channel.",
+    "keywords": ["send", "slack", "message", "channel"]
+  },
+  {
+    "name": "get_stock_data_tool",
+    "input": {"symbol": "str", "start_date": "str", "end_date": "str"},
+    "output": {"prices": "list[float]"},
+    "description": "Gets stock prices for a symbol over a date range.",
+    "keywords": ["get", "stock", "data", "prices", "getStockDataTool"]
+  },
+  {
+    "name": "analyze_trend_tool",
+    "input": {"data": "list[float]"},
+    "output": {"trend": "str"},
+    "description": "Analyzes a list of numbers and returns the trend (positive/negative/neutral).",
+    "keywords": ["analyze", "trend", "data", "positive", "negative", "analyzeTrendTool"]
+  },
+  {
+    "name": "summarize_analysis_tool",
+    "input": {"analysis": "str"},
+    "output": {"summary": "str"},
+    "description": "Summarizes an analysis into key points.",
+    "keywords": ["summarize", "analysis", "key points", "summary", "summarizeAnalysisTool"]
+  },
+  {
+    "name": "compare_numbers_tool",
+    "input": {"a": "float", "b": "float"},
+    "output": {"comparison": "str"},
+    "description": "Compares two numbers and returns which is greater, or if they are equal.",
+    "keywords": ["compare", "numbers", "greater", "less", "equal", "compareNumbersTool"]
+  },
+  {
+    "name": "run_python_tool",
+    "input": {"code": "str"},
+    "output": {"output": "str"},
+    "description": "Executes Python code and returns the output.",
+    "keywords": ["run", "python", "code", "execute", "runPythonTool"]
+  },
+  {
+    "name": "generate_whatsapp_message_tool",
+    "input": {"content": "str", "recipients": "list[str]"},
+    "output": {"message": "str"},
+    "description": "Drafts a WhatsApp message for given recipients.",
+    "keywords": ["whatsapp", "message", "draft", "recipients", "generate"]
+  },
+  {
+    "name": "send_whatsapp_tool",
+    "input": {"to": "str", "content": "str"},
+    "output": {"status": "str"},
+    "description": "Sends a WhatsApp message to a contact.",
+    "keywords": ["send", "whatsapp", "message", "contact"]
+  },
+  {
+    "name": "calculate_median_tool",
+    "input": {"data": "list[float]"},
+    "output": {"median": "float"},
+    "description": "Calculates the median value of a list of numbers.",
+    "keywords": ["median", "calculate", "data", "statistics"]
+  },
+  {
+    "name": "validate_phone_tool",
+    "input": {"phone": "str"},
+    "output": {"is_valid": "bool"},
+    "description": "Validates a phone number for correct format and region.",
+    "keywords": ["validate", "phone", "number", "check", "region"]
+  },
+  {
+    "name": "detect_suspicious_email_tool",
+    "input": {"email": "str"},
+    "output": {"is_suspicious": "bool"},
+    "description": "Detects if an email address is suspicious or likely fake.",
+    "keywords": ["detect", "suspicious", "email", "fake", "phishing"]
+  },
+  {
+    "name": "check_meeting_conflict_tool",
+    "input": {"meetings": "list[dict]", "new_meeting": "dict"},
+    "output": {"conflict": "bool"},
+    "description": "Checks if a new meeting conflicts with existing meetings.",
+    "keywords": ["check", "meeting", "conflict", "schedule", "calendar"]
+  },
+  {
+    "name": "extract_images_from_pdf_tool",
+    "input": {"pdf_path": "str"},
+    "output": {"images": "list[str]"},
+    "description": "Extracts all images from a PDF file.",
+    "keywords": ["extract", "images", "pdf", "file", "media"]
+  },
+  {
+    "name": "upload_to_cloud_tool",
+    "input": {"file_paths": "list[str]", "cloud_service": "str"},
+    "output": {"status": "str"},
+    "description": "Uploads files to a specified cloud service (e.g., Google Drive, Dropbox).",
+    "keywords": ["upload", "cloud", "files", "service", "backup"]
+  },
+  {
+    "name": "find_recent_files_tool",
+    "input": {"directory": "str", "days": "int"},
+    "output": {"files": "list[str]"},
+    "description": "Finds files in a directory modified within the last N days.",
+    "keywords": ["find", "recent", "files", "modified", "days"]
+  },
+  {
+    "name": "suggest_activity_tool",
+    "input": {"weather": "dict", "activity": "str"},
+    "output": {"suggestion": "str"},
+    "description": "Suggests if an activity is suitable based on weather conditions.",
+    "keywords": ["suggest", "activity", "weather", "suitable", "recommend"]
+  },
+  {
+    "name": "extract_zip_metadata_tool",
+    "input": {"zip_path": "str"},
+    "output": {"metadata": "dict"},
+    "description": "Extracts metadata (file names, sizes, dates) from a ZIP archive.",
+    "keywords": ["extract", "zip", "metadata", "archive", "info"]
+  },
+  {
+    "name": "find_duplicate_rows_tool",
+    "input": {"data": "list[dict]"},
+    "output": {"duplicates": "list[dict]"},
+    "description": "Finds duplicate rows in a dataset.",
+    "keywords": ["find", "duplicate", "rows", "data", "dataset"]
+  },
+  {
+    "name": "extract_urls_from_text_tool",
+    "input": {"text": "str"},
+    "output": {"urls": "list[str]"},
+    "description": "Extracts all URLs from a block of text.",
+    "keywords": ["extract", "urls", "text", "find", "links"]
+  },
+  {
+    "name": "generate_random_data_tool",
+    "input": {"schema": "dict", "count": "int"},
+    "output": {"data": "list[dict]"},
+    "description": "Generates random data based on a schema for testing or simulation.",
+    "keywords": ["generate", "random", "data", "schema", "test"]
+  },
+  {
+    "name": "extract_dates_from_text_tool",
+    "input": {"text": "str"},
+    "output": {"dates": "list[str]"},
+    "description": "Extracts all date strings from text.",
+    "keywords": ["extract", "dates", "text", "find", "parse"]
+  },
+  {
+    "name": "generate_uuid_batch_tool",
+    "input": {"count": "int"},
+    "output": {"uuids": "list[str]"},
+    "description": "Generates a batch of unique UUIDs.",
+    "keywords": ["generate", "uuid", "batch", "unique", "id"]
+  },
+  {
+    "name": "extract_phone_numbers_tool",
+    "input": {"text": "str"},
+    "output": {"phones": "list[str]"},
+    "description": "Extracts all phone numbers from text.",
+    "keywords": ["extract", "phone", "numbers", "text", "find"]
+  },
+  {
+    "name": "generate_html_report_tool",
+    "input": {"title": "str", "content": "str"},
+    "output": {"html_file": "str"},
+    "description": "Generates an HTML report from title and content.",
+    "keywords": ["generate", "html", "report", "file", "content"]
+  },
+  {
+    "name": "extract_hashtags_tool",
+    "input": {"text": "str"},
+    "output": {"hashtags": "list[str]"},
+    "description": "Extracts all hashtags from a block of text.",
+    "keywords": ["extract", "hashtags", "text", "find", "social"]
+  },
+  {
+    "name": "generate_qr_batch_tool",
+    "input": {"data_list": "list[str]"},
+    "output": {"qr_images": "list[str]"},
+    "description": "Generates QR codes for a list of data strings.",
+    "keywords": ["generate", "qr", "batch", "codes", "images"]
+  },
+  {
+    "name": "extract_mentions_tool",
+    "input": {"text": "str"},
+    "output": {"mentions": "list[str]"},
+    "description": "Extracts all @mentions from a block of text.",
+    "keywords": ["extract", "mentions", "text", "find", "social"]
+  },
+  {
+    "name": "generate_barcode_batch_tool",
+    "input": {"data_list": "list[str]", "format": "str"},
+    "output": {"barcode_images": "list[str]"},
+    "description": "Generates barcodes for a list of data strings.",
+    "keywords": ["generate", "barcode", "batch", "codes", "images"]
+  },
+  {
+    "name": "extract_currency_amounts_tool",
+    "input": {"text": "str"},
+    "output": {"amounts": "list[float]"},
+    "description": "Extracts all currency amounts from text.",
+    "keywords": ["extract", "currency", "amounts", "text", "find"]
+  },
+  {
+    "name": "generate_invoice_batch_tool",
+    "input": {"clients": "list[str]", "items_list": "list[list[dict]]"},
+    "output": {"invoices": "list[str]"},
+    "description": "Generates PDF invoices for multiple clients.",
+    "keywords": ["generate", "invoice", "batch", "pdf", "clients"]
+  },
+  {
+    "name": "extract_emojis_tool",
+    "input": {"text": "str"},
+    "output": {"emojis": "list[str]"},
+    "description": "Extracts all emojis from a block of text.",
+    "keywords": ["extract", "emojis", "text", "find", "unicode"]
+  },
+  {
+    "name": "generate_random_password_batch_tool",
+    "input": {"count": "int", "length": "int"},
+    "output": {"passwords": "list[str]"},
+    "description": "Generates a batch of random passwords.",
+    "keywords": ["generate", "random", "password", "batch", "security"]
+  },
+  {
+    "name": "extract_ip_addresses_tool",
+    "input": {"text": "str"},
+    "output": {"ips": "list[str]"},
+    "description": "Extracts all IP addresses from text.",
+    "keywords": ["extract", "ip", "addresses", "text", "find"]
+  },
+  {
+    "name": "generate_csv_report_tool",
+    "input": {"headers": "list[str]", "rows": "list[list]"},
+    "output": {"csv_file": "str"},
+    "description": "Generates a CSV report from headers and rows.",
+    "keywords": ["generate", "csv", "report", "file", "data"]
+  },
+  {
+    "name": "extract_domains_from_emails_tool",
+    "input": {"emails": "list[str]"},
+    "output": {"domains": "list[str]"},
+    "description": "Extracts domain names from a list of email addresses.",
+    "keywords": ["extract", "domains", "emails", "find", "parse"]
+  },
+  {
+    "name": "generate_pdf_batch_tool",
+    "input": {"contents": "list[str]"},
+    "output": {"pdf_files": "list[str]"},
+    "description": "Generates multiple PDF files from a list of contents.",
+    "keywords": ["generate", "pdf", "batch", "files", "content"]
+  },
+  {
+    "name": "extract_mac_addresses_tool",
+    "input": {"text": "str"},
+    "output": {"macs": "list[str]"},
+    "description": "Extracts all MAC addresses from text.",
+    "keywords": ["extract", "mac", "addresses", "text", "find"]
+  },
+  {
+    "name": "generate_markdown_report_tool",
+    "input": {"title": "str", "content": "str"},
+    "output": {"markdown_file": "str"},
+    "description": "Generates a Markdown report from title and content.",
+    "keywords": ["generate", "markdown", "report", "file", "content"]
+  },
+  {
+    "name": "extract_twitter_handles_tool",
+    "input": {"text": "str"},
+    "output": {"handles": "list[str]"},
+    "description": "Extracts all Twitter handles from text.",
+    "keywords": ["extract", "twitter", "handles", "text", "find"]
+  },
+  {
+    "name": "generate_excel_report_tool",
+    "input": {"headers": "list[str]", "rows": "list[list]"},
+    "output": {"excel_file": "str"},
+    "description": "Generates an Excel report from headers and rows.",
+    "keywords": ["generate", "excel", "report", "file", "data"]
+  },
+  {
+    "name": "extract_numbers_from_csv_tool",
+    "input": {"csv_path": "str", "column": "str"},
+    "output": {"numbers": "list[float]"},
+    "description": "Extracts all numbers from a specific column in a CSV file.",
+    "keywords": ["extract", "numbers", "csv", "column", "find"]
+  },
+  {
+    "name": "generate_latex_equation_tool",
+    "input": {"equation": "str"},
+    "output": {"latex": "str"},
+    "description": "Generates a LaTeX representation of a mathematical equation.",
+    "keywords": ["generate", "latex", "equation", "math", "format"]
+  },
+  {
+    "name": "extract_rgb_colors_tool",
+    "input": {"image_path": "str"},
+    "output": {"colors": "list[dict]"},
+    "description": "Extracts all RGB colors from an image.",
+    "keywords": ["extract", "rgb", "colors", "image", "find"]
+  },
+  {
+    "name": "generate_gantt_chart_tool",
+    "input": {"tasks": "list[dict]"},
+    "output": {"gantt_chart": "str"},
+    "description": "Generates a Gantt chart from a list of tasks.",
+    "keywords": ["generate", "gantt", "chart", "tasks", "project"]
+  },
+  {
+    "name": "extract_youtube_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all YouTube links from text.",
+    "keywords": ["extract", "youtube", "links", "text", "find"]
+  },
+  {
+    "name": "generate_pie_chart_tool",
+    "input": {"labels": "list[str]", "values": "list[float]"},
+    "output": {"pie_chart": "str"},
+    "description": "Generates a pie chart from labels and values.",
+    "keywords": ["generate", "pie", "chart", "labels", "values"]
+  },
+  {
+    "name": "extract_zip_file_list_tool",
+    "input": {"zip_path": "str"},
+    "output": {"files": "list[str]"},
+    "description": "Lists all files inside a ZIP archive.",
+    "keywords": ["extract", "zip", "files", "archive", "list"]
+  },
+  {
+    "name": "generate_scatter_plot_tool",
+    "input": {"x": "list[float]", "y": "list[float]"},
+    "output": {"scatter_plot": "str"},
+    "description": "Generates a scatter plot from X and Y data.",
+    "keywords": ["generate", "scatter", "plot", "x", "y"]
+  },
+  {
+    "name": "extract_html_links_tool",
+    "input": {"html": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all hyperlinks from HTML content.",
+    "keywords": ["extract", "html", "links", "content", "find"]
+  },
+  {
+    "name": "generate_word_cloud_tool",
+    "input": {"text": "str"},
+    "output": {"word_cloud": "str"},
+    "description": "Generates a word cloud image from text.",
+    "keywords": ["generate", "word", "cloud", "image", "text"]
+  },
+  {
+    "name": "extract_pdf_metadata_tool",
+    "input": {"pdf_path": "str"},
+    "output": {"metadata": "dict"},
+    "description": "Extracts metadata from a PDF file.",
+    "keywords": ["extract", "pdf", "metadata", "file", "info"]
+  },
+  {
+    "name": "generate_box_plot_tool",
+    "input": {"data": "list[float]"},
+    "output": {"box_plot": "str"},
+    "description": "Generates a box plot from a list of numbers.",
+    "keywords": ["generate", "box", "plot", "data", "statistics"]
+  },
+  {
+    "name": "extract_google_drive_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Google Drive links from text.",
+    "keywords": ["extract", "google", "drive", "links", "text"]
+  },
+  {
+    "name": "generate_histogram_tool",
+    "input": {"data": "list[float]", "bins": "int"},
+    "output": {"histogram": "str"},
+    "description": "Generates a histogram from data and bin count.",
+    "keywords": ["generate", "histogram", "data", "bins", "plot"]
+  },
+  {
+    "name": "extract_amazon_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Amazon product links from text.",
+    "keywords": ["extract", "amazon", "links", "text", "find"]
+  },
+  {
+    "name": "generate_timeline_tool",
+    "input": {"events": "list[dict]"},
+    "output": {"timeline": "str"},
+    "description": "Generates a timeline visualization from a list of events.",
+    "keywords": ["generate", "timeline", "events", "visualize", "history"]
+  },
+  {
+    "name": "extract_facebook_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Facebook links from text.",
+    "keywords": ["extract", "facebook", "links", "text", "find"]
+  },
+  {
+    "name": "generate_calendar_ics_tool",
+    "input": {"events": "list[dict]"},
+    "output": {"ics_file": "str"},
+    "description": "Generates an iCalendar (.ics) file from a list of events.",
+    "keywords": ["generate", "calendar", "ics", "events", "file"]
+  },
+  {
+    "name": "extract_instagram_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Instagram links from text.",
+    "keywords": ["extract", "instagram", "links", "text", "find"]
+  },
+  {
+    "name": "generate_heatmap_tool",
+    "input": {"data": "list[list[float]]"},
+    "output": {"heatmap": "str"},
+    "description": "Generates a heatmap from a 2D list of numbers.",
+    "keywords": ["generate", "heatmap", "data", "2d", "visualize"]
+  },
+  {
+    "name": "extract_linkedin_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all LinkedIn links from text.",
+    "keywords": ["extract", "linkedin", "links", "text", "find"]
+  },
+  {
+    "name": "generate_venn_diagram_tool",
+    "input": {"sets": "list[list]"},
+    "output": {"venn_diagram": "str"},
+    "description": "Generates a Venn diagram from a list of sets.",
+    "keywords": ["generate", "venn", "diagram", "sets", "visualize"]
+  },
+  {
+    "name": "extract_tiktok_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all TikTok links from text.",
+    "keywords": ["extract", "tiktok", "links", "text", "find"]
+  },
+  {
+    "name": "generate_radar_chart_tool",
+    "input": {"labels": "list[str]", "values": "list[float]"},
+    "output": {"radar_chart": "str"},
+    "description": "Generates a radar chart from labels and values.",
+    "keywords": ["generate", "radar", "chart", "labels", "values"]
+  },
+  {
+    "name": "extract_pinterest_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Pinterest links from text.",
+    "keywords": ["extract", "pinterest", "links", "text", "find"]
+  },
+  {
+    "name": "generate_area_chart_tool",
+    "input": {"labels": "list[str]", "values": "list[float]"},
+    "output": {"area_chart": "str"},
+    "description": "Generates an area chart from labels and values.",
+    "keywords": ["generate", "area", "chart", "labels", "values"]
+  },
+  {
+    "name": "extract_reddit_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Reddit links from text.",
+    "keywords": ["extract", "reddit", "links", "text", "find"]
+  },
+  {
+    "name": "generate_bubble_chart_tool",
+    "input": {"x": "list[float]", "y": "list[float]", "sizes": "list[float]"},
+    "output": {"bubble_chart": "str"},
+    "description": "Generates a bubble chart from X, Y, and size data.",
+    "keywords": ["generate", "bubble", "chart", "x", "y", "sizes"]
+  },
+  {
+    "name": "extract_snapchat_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Snapchat links from text.",
+    "keywords": ["extract", "snapchat", "links", "text", "find"]
+  },
+  {
+    "name": "generate_tree_map_tool",
+    "input": {"labels": "list[str]", "values": "list[float]"},
+    "output": {"tree_map": "str"},
+    "description": "Generates a tree map from labels and values.",
+    "keywords": ["generate", "tree", "map", "labels", "values"]
+  },
+  {
+    "name": "extract_telegram_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Telegram links from text.",
+    "keywords": ["extract", "telegram", "links", "text", "find"]
+  },
+  {
+    "name": "generate_sankey_diagram_tool",
+    "input": {"nodes": "list[str]", "links": "list[dict]"},
+    "output": {"sankey_diagram": "str"},
+    "description": "Generates a Sankey diagram from nodes and links.",
+    "keywords": ["generate", "sankey", "diagram", "nodes", "links"]
+  },
+  {
+    "name": "extract_discord_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Discord links from text.",
+    "keywords": ["extract", "discord", "links", "text", "find"]
+  },
+  {
+    "name": "generate_parallel_coordinates_tool",
+    "input": {"data": "list[dict]"},
+    "output": {"parallel_coordinates": "str"},
+    "description": "Generates a parallel coordinates plot from data.",
+    "keywords": ["generate", "parallel", "coordinates", "plot", "data"]
+  },
+  {
+    "name": "extract_medium_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Medium.com links from text.",
+    "keywords": ["extract", "medium", "links", "text", "find"]
+  },
+  {
+    "name": "generate_violin_plot_tool",
+    "input": {"data": "list[float]"},
+    "output": {"violin_plot": "str"},
+    "description": "Generates a violin plot from a list of numbers.",
+    "keywords": ["generate", "violin", "plot", "data", "statistics"]
+  },
+  {
+    "name": "extract_stackoverflow_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Stack Overflow links from text.",
+    "keywords": ["extract", "stackoverflow", "links", "text", "find"]
+  },
+  {
+    "name": "generate_sunburst_chart_tool",
+    "input": {"labels": "list[str]", "parents": "list[str]", "values": "list[float]"},
+    "output": {"sunburst_chart": "str"},
+    "description": "Generates a sunburst chart from labels, parents, and values.",
+    "keywords": ["generate", "sunburst", "chart", "labels", "values"]
+  },
+  {
+    "name": "extract_github_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all GitHub links from text.",
+    "keywords": ["extract", "github", "links", "text", "find"]
+  },
+  {
+    "name": "generate_chord_diagram_tool",
+    "input": {"matrix": "list[list[float]]", "labels": "list[str]"},
+    "output": {"chord_diagram": "str"},
+    "description": "Generates a chord diagram from a matrix and labels.",
+    "keywords": ["generate", "chord", "diagram", "matrix", "labels"]
+  },
+  {
+    "name": "extract_bitly_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Bitly short links from text.",
+    "keywords": ["extract", "bitly", "links", "text", "find"]
+  },
+  {
+    "name": "generate_sankey_matrix_tool",
+    "input": {"matrix": "list[list[float]]", "labels": "list[str]"},
+    "output": {"sankey_matrix": "str"},
+    "description": "Generates a Sankey matrix diagram from a matrix and labels.",
+    "keywords": ["generate", "sankey", "matrix", "diagram", "labels"]
+  },
+  {
+    "name": "extract_dropbox_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Dropbox links from text.",
+    "keywords": ["extract", "dropbox", "links", "text", "find"]
+  },
+  {
+    "name": "generate_parallel_sets_tool",
+    "input": {"data": "list[dict]"},
+    "output": {"parallel_sets": "str"},
+    "description": "Generates a parallel sets visualization from data.",
+    "keywords": ["generate", "parallel", "sets", "visualize", "data"]
+  },
+  {
+    "name": "extract_onedrive_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all OneDrive links from text.",
+    "keywords": ["extract", "onedrive", "links", "text", "find"]
+  },
+  {
+    "name": "generate_sankey_parallel_tool",
+    "input": {"data": "list[dict]"},
+    "output": {"sankey_parallel": "str"},
+    "description": "Generates a parallel Sankey diagram from data.",
+    "keywords": ["generate", "sankey", "parallel", "diagram", "data"]
+  },
+  {
+    "name": "extract_weblink_domains_tool",
+    "input": {"links": "list[str]"},
+    "output": {"domains": "list[str]"},
+    "description": "Extracts domain names from a list of web links.",
+    "keywords": ["extract", "weblink", "domains", "links", "find"]
+  },
+  {
+    "name": "generate_sankey_flow_tool",
+    "input": {"flows": "list[dict]"},
+    "output": {"sankey_flow": "str"},
+    "description": "Generates a Sankey flow diagram from a list of flows.",
+    "keywords": ["generate", "sankey", "flow", "diagram", "visualize"]
+  },
+  {
+    "name": "extract_yandex_links_tool",
+    "input": {"text": "str"},
+    "output": {"links": "list[str]"},
+    "description": "Extracts all Yandex links from text.",
+    "keywords": ["extract", "yandex", "links", "text", "find"]
+  },
+  {
+    "name": "generate_sankey_grouped_tool",
+    "input": {"groups": "list[dict]"},
+    "output": {"sankey_grouped": "str"},
+    "description": "Generates a grouped Sankey diagram from groups of data.",
+    "keywords": ["generate", "sankey", "grouped", "diagram", "data"]
+  },
+  {
+    "name": "read_csv_file_tool",
+    "input": {"file_path": "str"},
+    "output": {"data": "list[dict]"},
+    "description": "Reads a CSV file and returns its data as a list of dictionaries.",
+    "keywords": ["read", "csv", "file", "data", "spreadsheet"]
+  },
+  {
+    "name": "read_excel_file_tool",
+    "input": {"file_path": "str"},
+    "output": {"data": "list[dict]", "sheet_names": "list[str]"},
+    "description": "Reads an Excel file and returns its data and sheet names.",
+    "keywords": ["read", "excel", "file", "data", "spreadsheet", "sheet"]
+  },
+  {
+    "name": "create_calendar_event_tool",
+    "input": {"title": "str", "date": "str", "time": "str", "attendees": "list[str]", "location": "str"},
+    "output": {"event_id": "str"},
+    "description": "Creates a calendar event with title, date, time, attendees, and location.",
+    "keywords": ["create", "calendar", "event", "invite", "meeting"]
+  },
+  {
+    "name": "overdue_task_notifier_tool",
+    "input": {"tasks": "list[dict]"},
+    "output": {"notified": "list[str]"},
+    "description": "Identifies overdue tasks from a list and notifies the responsible people via email, SMS, or other channels.",
+    "keywords": ["overdue", "task", "notify", "responsible", "reminder", "deadline", "alert", "late", "tasks", "notification"]
+  }
+] 

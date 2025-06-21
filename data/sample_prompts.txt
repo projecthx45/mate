@@ -1,0 +1,15 @@
+Translate this document and email it to my manager
+Summarize this CSV file and send a WhatsApp
+Calculate the average temperature of the last 7 days and save it to a file
+Get all invoices for March and send a summary email to finance
+Extract all tables from this PDF and generate a summary report
+Summarize this research article and generate a Markdown report
+Extract all phone numbers from this document and send them via SMS
+Convert this Excel sheet to PDF and upload it to the cloud
+Create a calendar invite for a project meeting and send a Slack notification
+Analyze this CSV for duplicate entries and save the cleaned file
+Translate this resume to Spanish and email it to HR
+Generate a pie chart of expenses by category and save as PNG
+Extract all URLs from this webpage and save them in a JSON file
+Summarize the last 10 messages in this chat and send a WhatsApp update
+Create a bar chart of monthly sales and email the chart to my team 

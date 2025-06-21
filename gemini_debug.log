@@ -1,0 +1,1660 @@
+
+--- PROMPT ---
+
+You are an AI workflow planner. Break down the user's request into a sequence of function calls using only the tools below.
+
+INSTRUCTIONS:
+- Use only the listed tools. Do not invent tools.
+- Respond with a valid JSON array of function call steps, no extra text.
+- Each step: {'function': tool_name, 'inputs': {...}}
+- If the request can't be fulfilled, return [].
+- If a required input is missing, use a placeholder (e.g., '?').
+- Use the correct order and map inputs from user query or previous outputs.
+
+TOOLS:
+- generate_summary_pdf_tool(text: str) -> pdf_file: str
+  Description: Creates a simple PDF from summary content.
+- generate_pie_chart_tool(labels: list[str], values: list[float]) -> pie_chart: str
+  Description: Generates a pie chart from labels and values.
+- generate_email_body_tool(summary: str) -> email: str
+  Description: Creates a formal email from a summary.
+- generate_excel_report_tool(headers: list[str], rows: list[list]) -> excel_file: str
+  Description: Generates an Excel report from headers and rows.
+- generate_invoice_tool(client: str, items: list[dict]) -> invoice_pdf: str
+  Description: Creates a PDF invoice.
+- read_pdf_tool(file_path: str) -> content: str
+  Description: Extracts all text content from a PDF file.
+- read_excel_file_tool(file_path: str) -> data: list[dict], sheet_names: list[str]
+  Description: Reads an Excel file and returns its data and sheet names.
+- extract_pdf_metadata_tool(pdf_path: str) -> metadata: dict
+  Description: Extracts metadata from a PDF file.
+- extract_images_from_pdf_tool(pdf_path: str) -> images: list[str]
+  Description: Extracts all images from a PDF file.
+- validate_phone_tool(phone: str) -> is_valid: bool
+  Description: Validates a phone number for correct format and region.
+- extract_emails_tool(text: str) -> emails: list[str]
+  Description: Extracts email addresses from text.
+- generate_bubble_chart_tool(x: list[float], y: list[float], sizes: list[float]) -> bubble_chart: str
+  Description: Generates a bubble chart from X, Y, and size data.
+
+EXAMPLE:
+User query: "Summarize sales by category and email the report"
+[
+  {"function": "readExcelTool", "inputs": {"file_path": "?"}},
+  {"function": "groupByCategoryTool", "inputs": {"data": "?", "category_field": "?"}},
+  {"function": "calculateSumTool", "inputs": {"grouped_data": "?", "sum_field": "?"}},
+  {"function": "generateSummaryPDFTool", "inputs": {"summary_data": "?"}},
+  {"function": "generateEmailTool", "inputs": {"content": "?"}},
+  {"function": "sendEmailTool", "inputs": {"to": "?", "content": "?"}}
+]
+
+User query:
+"Create a summary of sales from this Excel file, generate a pie chart of revenue by region, convert it to PDF, and email it to the finance team"
+
+Respond ONLY with the JSON array as described above.
+
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "```json\n[\n  {\"function\": \"read_excel_file_tool\", \"inputs\": {\"file_path\": \"?\"}},\n  {\"function\": \"generate_summary_pdf_tool\", \"inputs\": {\"text\": \"?\"}},\n  {\"function\": \"generate_pie_chart_tool\", \"inputs\": {\"labels\": \"?\", \"values\": \"?\"}},\n  {\"function\": \"generate_email_body_tool\", \"inputs\": {\"summary\": \"?\"}}\n]\n```"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -0.023968837793590953
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 769,
+    "candidatesTokenCount": 103,
+    "totalTokenCount": 872,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 769
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 103
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "ZyRWaJOFFKXTnvgPlIeSoQg"
+}
+
+
+--- PROMPT ---
+
+You are an AI workflow planner. Break down the user's request into a sequence of function calls using only the tools below.
+
+INSTRUCTIONS:
+- Use only the listed tools. Do not invent tools.
+- Respond with a valid JSON array of function call steps, no extra text.
+- Each step: {'function': tool_name, 'inputs': {...}}
+- If the request can't be fulfilled, return [].
+- If a required input is missing, use a placeholder (e.g., '?').
+- Use the correct order and map inputs from user query or previous outputs.
+
+TOOLS:
+- generate_summary_pdf_tool(text: str) -> pdf_file: str
+  Description: Creates a simple PDF from summary content.
+- generate_pie_chart_tool(labels: list[str], values: list[float]) -> pie_chart: str
+  Description: Generates a pie chart from labels and values.
+- generate_excel_report_tool(headers: list[str], rows: list[list]) -> excel_file: str
+  Description: Generates an Excel report from headers and rows.
+- generate_invoice_tool(client: str, items: list[dict]) -> invoice_pdf: str
+  Description: Creates a PDF invoice.
+- read_pdf_tool(file_path: str) -> content: str
+  Description: Extracts all text content from a PDF file.
+- read_excel_file_tool(file_path: str) -> data: list[dict], sheet_names: list[str]
+  Description: Reads an Excel file and returns its data and sheet names.
+- extract_pdf_metadata_tool(pdf_path: str) -> metadata: dict
+  Description: Extracts metadata from a PDF file.
+- extract_images_from_pdf_tool(pdf_path: str) -> images: list[str]
+  Description: Extracts all images from a PDF file.
+- validate_phone_tool(phone: str) -> is_valid: bool
+  Description: Validates a phone number for correct format and region.
+- generate_email_body_tool(summary: str) -> email: str
+  Description: Creates a formal email from a summary.
+- generate_bubble_chart_tool(x: list[float], y: list[float], sizes: list[float]) -> bubble_chart: str
+  Description: Generates a bubble chart from X, Y, and size data.
+- generate_pdf_batch_tool(contents: list[str]) -> pdf_files: list[str]
+  Description: Generates multiple PDF files from a list of contents.
+
+EXAMPLE:
+User query: "Summarize sales by category and email the report"
+[
+  {"function": "readExcelTool", "inputs": {"file_path": "?"}},
+  {"function": "groupByCategoryTool", "inputs": {"data": "?", "category_field": "?"}},
+  {"function": "calculateSumTool", "inputs": {"grouped_data": "?", "sum_field": "?"}},
+  {"function": "generateSummaryPDFTool", "inputs": {"summary_data": "?"}},
+  {"function": "generateEmailTool", "inputs": {"content": "?"}},
+  {"function": "sendEmailTool", "inputs": {"to": "?", "content": "?"}}
+]
+
+User query:
+"Create a summary of sales from this Excel file, generate a pie chart of revenue by region, convert it to PDF"
+
+Respond ONLY with the JSON array as described above.
+
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "```json\n[\n  {\"function\": \"read_excel_file_tool\", \"inputs\": {\"file_path\": \"?\"}},\n  {\"function\": \"generate_summary_pdf_tool\", \"inputs\": {\"text\": \"?\"}},\n  {\"function\": \"generate_pie_chart_tool\", \"inputs\": {\"labels\": \"?\", \"values\": \"?\"}}\n]\n```"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -0.019495206114686567
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 771,
+    "candidatesTokenCount": 81,
+    "totalTokenCount": 852,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 771
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 81
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "qiRWaOr5CMy12cAP0YDw0Qc"
+}
+
+
+--- PROMPT ---
+
+You are an AI workflow planner. Break down the user's request into a sequence of function calls using only the tools below.
+
+INSTRUCTIONS:
+- Use only the listed tools. Do not invent tools.
+- Respond with a valid JSON array of function call steps, no extra text.
+- Each step: {'function': tool_name, 'inputs': {...}}
+- If the request can't be fulfilled, return [].
+- If a required input is missing, use a placeholder (e.g., '?').
+- Use the correct order and map inputs from user query or previous outputs.
+
+TOOLS:
+- generate_summary_pdf_tool(text: str) -> pdf_file: str
+  Description: Creates a simple PDF from summary content.
+- generate_pie_chart_tool(labels: list[str], values: list[float]) -> pie_chart: str
+  Description: Generates a pie chart from labels and values.
+- generate_excel_report_tool(headers: list[str], rows: list[list]) -> excel_file: str
+  Description: Generates an Excel report from headers and rows.
+- generate_invoice_tool(client: str, items: list[dict]) -> invoice_pdf: str
+  Description: Creates a PDF invoice.
+- read_pdf_tool(file_path: str) -> content: str
+  Description: Extracts all text content from a PDF file.
+- read_excel_file_tool(file_path: str) -> data: list[dict], sheet_names: list[str]
+  Description: Reads an Excel file and returns its data and sheet names.
+- extract_pdf_metadata_tool(pdf_path: str) -> metadata: dict
+  Description: Extracts metadata from a PDF file.
+- extract_images_from_pdf_tool(pdf_path: str) -> images: list[str]
+  Description: Extracts all images from a PDF file.
+- validate_phone_tool(phone: str) -> is_valid: bool
+  Description: Validates a phone number for correct format and region.
+- generate_email_body_tool(summary: str) -> email: str
+  Description: Creates a formal email from a summary.
+- generate_bubble_chart_tool(x: list[float], y: list[float], sizes: list[float]) -> bubble_chart: str
+  Description: Generates a bubble chart from X, Y, and size data.
+- generate_pdf_batch_tool(contents: list[str]) -> pdf_files: list[str]
+  Description: Generates multiple PDF files from a list of contents.
+
+EXAMPLE:
+User query: "Summarize sales by category and email the report"
+[
+  {"function": "readExcelTool", "inputs": {"file_path": "?"}},
+  {"function": "groupByCategoryTool", "inputs": {"data": "?", "category_field": "?"}},
+  {"function": "calculateSumTool", "inputs": {"grouped_data": "?", "sum_field": "?"}},
+  {"function": "generateSummaryPDFTool", "inputs": {"summary_data": "?"}},
+  {"function": "generateEmailTool", "inputs": {"content": "?"}},
+  {"function": "sendEmailTool", "inputs": {"to": "?", "content": "?"}}
+]
+
+User query:
+"Create a summary of sales from this Excel file, generate a pie chart of revenue by region, convert it to PDF"
+
+Respond ONLY with the JSON array as described above.
+
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "```json\n[\n  {\"function\": \"read_excel_file_tool\", \"inputs\": {\"file_path\": \"?\"}},\n  {\"function\": \"generate_pie_chart_tool\", \"inputs\": {\"labels\": \"?\", \"values\": \"?\"}},\n  {\"function\": \"generate_summary_pdf_tool\", \"inputs\": {\"text\": \"?\"}}\n]\n```"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -0.024572919916223596
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 771,
+    "candidatesTokenCount": 81,
+    "totalTokenCount": 852,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 771
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 81
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "qiRWaLnqFLG0xfcP74Lc0Q0"
+}
+
+
+--- PROMPT ---
+You are an expert AI workflow planner. You are assisting a user in updating a step-by-step function call plan using a library of available tools.
+
+Context:
+- The user has provided an original request:
+  Create a summary of sales from this Excel file, generate a pie chart of revenue by region, convert it to PDF
+- The current plan is a JSON array of function call steps, each with a function name and inputs.
+- The user now wants to update the plan as described below.
+- The available tools are provided as a JSON array, each with name, description, input, and output.
+
+Strict Instructions:
+1. Only use tools from the provided tool list. Do NOT invent or hallucinate any tools, steps, or data.
+2. Update the plan strictly according to the user's update request. Make only the necessary changes.
+3. Preserve all valid steps from the current plan unless the update request says to remove or change them.
+4. If you add, remove, or change steps, do so explicitly and only as required by the update request.
+5. For each step, use the correct function name and required inputs as per the tool schema.
+6. If an input value is not provided, leave it empty or as required by the schema, but do NOT invent values.
+7. Output ONLY a valid JSON array of function call steps. Do NOT include any explanation, comments, or extra text.
+8. Any deviation from this format, or any hallucination, will be rejected.
+
+User's Update Request:
+Change the output format from bar chart to pie chart and email it to finance team
+
+Current Plan (JSON array):
+[
+  {
+    "function": "read_excel_file_tool",
+    "inputs": {
+      "file_path": "?"
+    }
+  },
+  {
+    "function": "generate_pie_chart_tool",
+    "inputs": {
+      "labels": "?",
+      "values": "?"
+    }
+  },
+  {
+    "function": "generate_summary_pdf_tool",
+    "inputs": {
+      "text": "?"
+    }
+  }
+]
+
+Available Tools (JSON array):
+[
+  {
+    "name": "generate_pie_chart_tool",
+    "input": {
+      "labels": "list[str]",
+      "values": "list[float]"
+    },
+    "output": {
+      "pie_chart": "str"
+    },
+    "description": "Generates a pie chart from labels and values.",
+    "keywords": [
+      "generate",
+      "pie",
+      "chart",
+      "labels",
+      "values"
+    ]
+  },
+  {
+    "name": "generate_bubble_chart_tool",
+    "input": {
+      "x": "list[float]",
+      "y": "list[float]",
+      "sizes": "list[float]"
+    },
+    "output": {
+      "bubble_chart": "str"
+    },
+    "description": "Generates a bubble chart from X, Y, and size data.",
+    "keywords": [
+      "generate",
+      "bubble",
+      "chart",
+      "x",
+      "y",
+      "sizes"
+    ]
+  },
+  {
+    "name": "generate_summary_pdf_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "pdf_file": "str"
+    },
+    "description": "Creates a simple PDF from summary content.",
+    "keywords": [
+      "pdf",
+      "generate",
+      "summary",
+      "create",
+      "file"
+    ]
+  },
+  {
+    "name": "data_visualizer_tool",
+    "input": {
+      "data": "list[dict]",
+      "chart_type": "str"
+    },
+    "output": {
+      "chart_path": "str"
+    },
+    "description": "Visualizes data as a chart or graph.",
+    "keywords": [
+      "data",
+      "visualize",
+      "chart",
+      "graph",
+      "plot"
+    ]
+  },
+  {
+    "name": "generate_area_chart_tool",
+    "input": {
+      "labels": "list[str]",
+      "values": "list[float]"
+    },
+    "output": {
+      "area_chart": "str"
+    },
+    "description": "Generates an area chart from labels and values.",
+    "keywords": [
+      "generate",
+      "area",
+      "chart",
+      "labels",
+      "values"
+    ]
+  },
+  {
+    "name": "generate_gantt_chart_tool",
+    "input": {
+      "tasks": "list[dict]"
+    },
+    "output": {
+      "gantt_chart": "str"
+    },
+    "description": "Generates a Gantt chart from a list of tasks.",
+    "keywords": [
+      "generate",
+      "gantt",
+      "chart",
+      "tasks",
+      "project"
+    ]
+  },
+  {
+    "name": "generate_radar_chart_tool",
+    "input": {
+      "labels": "list[str]",
+      "values": "list[float]"
+    },
+    "output": {
+      "radar_chart": "str"
+    },
+    "description": "Generates a radar chart from labels and values.",
+    "keywords": [
+      "generate",
+      "radar",
+      "chart",
+      "labels",
+      "values"
+    ]
+  },
+  {
+    "name": "generate_sunburst_chart_tool",
+    "input": {
+      "labels": "list[str]",
+      "parents": "list[str]",
+      "values": "list[float]"
+    },
+    "output": {
+      "sunburst_chart": "str"
+    },
+    "description": "Generates a sunburst chart from labels, parents, and values.",
+    "keywords": [
+      "generate",
+      "sunburst",
+      "chart",
+      "labels",
+      "values"
+    ]
+  },
+  {
+    "name": "file_converter_tool",
+    "input": {
+      "file_path": "str",
+      "to_format": "str"
+    },
+    "output": {
+      "converted_path": "str"
+    },
+    "description": "Converts a file to a different format.",
+    "keywords": [
+      "file",
+      "convert",
+      "format",
+      "type",
+      "change"
+    ]
+  },
+  {
+    "name": "generate_email_body_tool",
+    "input": {
+      "summary": "str"
+    },
+    "output": {
+      "email": "str"
+    },
+    "description": "Creates a formal email from a summary.",
+    "keywords": [
+      "generate",
+      "email",
+      "body",
+      "compose",
+      "summary"
+    ]
+  },
+  {
+    "name": "generate_excel_report_tool",
+    "input": {
+      "headers": "list[str]",
+      "rows": "list[list]"
+    },
+    "output": {
+      "excel_file": "str"
+    },
+    "description": "Generates an Excel report from headers and rows.",
+    "keywords": [
+      "generate",
+      "excel",
+      "report",
+      "file",
+      "data"
+    ]
+  },
+  {
+    "name": "graph_plotter_tool",
+    "input": {
+      "data": "list[float]",
+      "type": "str",
+      "output_format": "str"
+    },
+    "output": {
+      "graph_path": "str"
+    },
+    "description": "Plots a graph from data (line, bar, etc) and can export as PNG or other formats.",
+    "keywords": [
+      "graph",
+      "plot",
+      "data",
+      "visualize",
+      "chart",
+      "png"
+    ]
+  }
+]
+
+Return ONLY the updated plan as a valid JSON array.
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "```json\n[\n  {\n    \"function\": \"read_excel_file_tool\",\n    \"inputs\": {\n      \"file_path\": \"?\"\n    }\n  },\n  {\n    \"function\": \"generate_pie_chart_tool\",\n    \"inputs\": {\n      \"labels\": \"?\",\n      \"values\": \"?\"\n    }\n  },\n  {\n    \"function\": \"generate_summary_pdf_tool\",\n    \"inputs\": {\n      \"text\": \"?\"\n    }\n  },\n  {\n    \"function\": \"generate_email_body_tool\",\n    \"inputs\": {\n      \"summary\": \"?\"\n    }\n  }\n]\n```"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -0.0013291642164728445
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1925,
+    "candidatesTokenCount": 157,
+    "totalTokenCount": 2082,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1925
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 157
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "2yRWaOSEFv__698Pv8HGgAg"
+}
+
+
+--- PROMPT ---
+
+You are an AI workflow planner. Break down the user's request into a sequence of function calls using only the tools below.
+
+INSTRUCTIONS:
+- Use only the listed tools. Do not invent tools.
+- Respond with a valid JSON array of function call steps, no extra text.
+- Each step: {'function': tool_name, 'inputs': {...}}
+- If the request can't be fulfilled, return [].
+- If a required input is missing, use a placeholder (e.g., '?').
+- Use the correct order and map inputs from user query or previous outputs.
+
+TOOLS:
+- send_sms_tool(to: str, content: str) -> status: str
+  Description: Sends an SMS message to a phone number.
+- extract_phone_numbers_tool(text: str) -> phones: list[str]
+  Description: Extracts all phone numbers from text.
+- extract_tables_tool(file_path: str) -> tables: list[list[dict]]
+  Description: Extracts all tables from a document or spreadsheet.
+- format_sms_tool(alert: str) -> sms_text: str
+  Description: Formats a short SMS message.
+- extract_numbers_tool(text: str) -> numbers: list[float]
+  Description: Extracts all numbers from text.
+- format_phone_tool(phone: str, country: str) -> formatted: str
+  Description: Formats phone number for a country.
+- validate_phone_tool(phone: str) -> is_valid: bool
+  Description: Validates a phone number for correct format and region.
+- extract_numbers_from_csv_tool(csv_path: str, column: str) -> numbers: list[float]
+  Description: Extracts all numbers from a specific column in a CSV file.
+- compare_numbers_tool(a: float, b: float) -> comparison: str
+  Description: Compares two numbers and returns which is greater, or if they are equal.
+- extract_text_tool(file_path: str, type: str) -> content: str
+  Description: Extracts text from any file type (PDF, DOCX, TXT, etc.) by auto-detecting format.
+- pdf_merge_tool(pdf_files: list[str]) -> merged_path: str
+  Description: Merges multiple PDF files into one.
+- send_to_dashboard_tool(data: dict, dashboard_id: str) -> status: str
+  Description: Sends data to a specified dashboard.
+
+EXAMPLE:
+User query: "Summarize sales by category and email the report"
+[
+  {"function": "readExcelTool", "inputs": {"file_path": "?"}},
+  {"function": "groupByCategoryTool", "inputs": {"data": "?", "category_field": "?"}},
+  {"function": "calculateSumTool", "inputs": {"grouped_data": "?", "sum_field": "?"}},
+  {"function": "generateSummaryPDFTool", "inputs": {"summary_data": "?"}},
+  {"function": "generateEmailTool", "inputs": {"content": "?"}},
+  {"function": "sendEmailTool", "inputs": {"to": "?", "content": "?"}}
+]
+
+User query:
+"Extract all phone numbers from this document and send them via SMS"
+
+Respond ONLY with the JSON array as described above.
+
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "```json\n[\n  {\"function\": \"extract_text_tool\", \"inputs\": {\"file_path\": \"?\", \"type\": \"?\"}},\n  {\"function\": \"extract_phone_numbers_tool\", \"inputs\": {\"text\": \"?\"}},\n  {\"function\": \"send_sms_tool\", \"inputs\": {\"to\": \"?\", \"content\": \"?\"}}\n]\n```"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -0.013660025305864288
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 739,
+    "candidatesTokenCount": 82,
+    "totalTokenCount": 821,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 739
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 82
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "HyVWaPpN___r3w-_wcaACA"
+}
+
+
+--- PROMPT ---
+You are an expert AI workflow planner. You are assisting a user in updating a step-by-step function call plan using a library of available tools.
+
+Context:
+- The user has provided an original request:
+  Extract all phone numbers from this document and send them via SMS
+- The current plan is a JSON array of function call steps, each with a function name and inputs.
+- The user now wants to update the plan as described below.
+- The available tools are provided as a JSON array, each with name, description, input, and output.
+
+Strict Instructions:
+1. Only use tools from the provided tool list. Do NOT invent or hallucinate any tools, steps, or data.
+2. Update the plan strictly according to the user's update request. Make only the necessary changes.
+3. Preserve all valid steps from the current plan unless the update request says to remove or change them.
+4. If you add, remove, or change steps, do so explicitly and only as required by the update request.
+5. For each step, use the correct function name and required inputs as per the tool schema.
+6. If an input value is not provided, leave it empty or as required by the schema, but do NOT invent values.
+7. Output ONLY a valid JSON array of function call steps. Do NOT include any explanation, comments, or extra text.
+8. Any deviation from this format, or any hallucination, will be rejected.
+
+User's Update Request:
+also send a WhatsApp text too
+
+Current Plan (JSON array):
+[
+  {
+    "function": "extract_text_tool",
+    "inputs": {
+      "file_path": "?",
+      "type": "?"
+    }
+  },
+  {
+    "function": "extract_phone_numbers_tool",
+    "inputs": {
+      "text": "?"
+    }
+  },
+  {
+    "function": "send_sms_tool",
+    "inputs": {
+      "to": "?",
+      "content": "?"
+    }
+  }
+]
+
+Available Tools (JSON array):
+[
+  {
+    "name": "send_sms_tool",
+    "input": {
+      "to": "str",
+      "content": "str"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Sends an SMS message to a phone number.",
+    "keywords": [
+      "send",
+      "sms",
+      "text",
+      "message",
+      "phone"
+    ]
+  },
+  {
+    "name": "extract_phone_numbers_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "phones": "list[str]"
+    },
+    "description": "Extracts all phone numbers from text.",
+    "keywords": [
+      "extract",
+      "phone",
+      "numbers",
+      "text",
+      "find"
+    ]
+  },
+  {
+    "name": "send_whatsapp_tool",
+    "input": {
+      "to": "str",
+      "content": "str"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Sends a WhatsApp message to a contact.",
+    "keywords": [
+      "send",
+      "whatsapp",
+      "message",
+      "contact"
+    ]
+  },
+  {
+    "name": "extract_numbers_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "numbers": "list[float]"
+    },
+    "description": "Extracts all numbers from text.",
+    "keywords": [
+      "extract",
+      "numbers",
+      "text",
+      "parse",
+      "digits"
+    ]
+  },
+  {
+    "name": "format_sms_tool",
+    "input": {
+      "alert": "str"
+    },
+    "output": {
+      "sms_text": "str"
+    },
+    "description": "Formats a short SMS message.",
+    "keywords": [
+      "format",
+      "sms",
+      "message",
+      "alert",
+      "text"
+    ]
+  },
+  {
+    "name": "extract_tables_tool",
+    "input": {
+      "file_path": "str"
+    },
+    "output": {
+      "tables": "list[list[dict]]"
+    },
+    "description": "Extracts all tables from a document or spreadsheet.",
+    "keywords": [
+      "table",
+      "extract",
+      "spreadsheet",
+      "document",
+      "data"
+    ]
+  },
+  {
+    "name": "generate_whatsapp_message_tool",
+    "input": {
+      "content": "str",
+      "recipients": "list[str]"
+    },
+    "output": {
+      "message": "str"
+    },
+    "description": "Drafts a WhatsApp message for given recipients.",
+    "keywords": [
+      "whatsapp",
+      "message",
+      "draft",
+      "recipients",
+      "generate"
+    ]
+  },
+  {
+    "name": "send_to_dashboard_tool",
+    "input": {
+      "data": "dict",
+      "dashboard_id": "str"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Sends data to a specified dashboard.",
+    "keywords": [
+      "send",
+      "dashboard",
+      "data",
+      "report",
+      "sendToDashboardTool"
+    ]
+  },
+  {
+    "name": "format_phone_tool",
+    "input": {
+      "phone": "str",
+      "country": "str"
+    },
+    "output": {
+      "formatted": "str"
+    },
+    "description": "Formats phone number for a country.",
+    "keywords": [
+      "format",
+      "phone",
+      "number",
+      "country",
+      "validate"
+    ]
+  },
+  {
+    "name": "send_email_tool",
+    "input": {
+      "to": "str",
+      "subject": "str",
+      "content": "str",
+      "attachments": "list[str]"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Sends an email with optional attachments.",
+    "keywords": [
+      "send",
+      "email",
+      "mail",
+      "message",
+      "attachments"
+    ]
+  },
+  {
+    "name": "validate_phone_tool",
+    "input": {
+      "phone": "str"
+    },
+    "output": {
+      "is_valid": "bool"
+    },
+    "description": "Validates a phone number for correct format and region.",
+    "keywords": [
+      "validate",
+      "phone",
+      "number",
+      "check",
+      "region"
+    ]
+  },
+  {
+    "name": "send_slack_message_tool",
+    "input": {
+      "channel": "str",
+      "content": "str"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Sends a message to a Slack channel.",
+    "keywords": [
+      "send",
+      "slack",
+      "message",
+      "channel"
+    ]
+  }
+]
+
+Return ONLY the updated plan as a valid JSON array.
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "[\n  {\n    \"function\": \"extract_text_tool\",\n    \"inputs\": {\n      \"file_path\": \"?\",\n      \"type\": \"?\"\n    }\n  },\n  {\n    \"function\": \"extract_phone_numbers_tool\",\n    \"inputs\": {\n      \"text\": \"?\"\n    }\n  },\n  {\n    \"function\": \"send_sms_tool\",\n    \"inputs\": {\n      \"to\": \"?\",\n      \"content\": \"?\"\n    }\n  },\n  {\n    \"function\": \"send_whatsapp_tool\",\n    \"inputs\": {\n      \"to\": \"?\",\n      \"content\": \"?\"\n    }\n  }\n]"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -2.3231655359268188e-05
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1772,
+    "candidatesTokenCount": 160,
+    "totalTokenCount": 1932,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1772
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 160
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "OyVWaK2jGov72cAPzvPgyQU"
+}
+
+
+--- PROMPT ---
+
+You are an AI workflow planner. Break down the user's request into a sequence of function calls using only the tools below.
+
+INSTRUCTIONS:
+- Use only the listed tools. Do not invent tools.
+- Respond with a valid JSON array of function call steps, no extra text.
+- Each step: {'function': tool_name, 'inputs': {...}}
+- If the request can't be fulfilled, return [].
+- If a required input is missing, use a placeholder (e.g., '?').
+- Use the correct order and map inputs from user query or previous outputs.
+
+TOOLS:
+- send_sms_tool(to: str, content: str) -> status: str
+  Description: Sends an SMS message to a phone number.
+- extract_phone_numbers_tool(text: str) -> phones: list[str]
+  Description: Extracts all phone numbers from text.
+- extract_tables_tool(file_path: str) -> tables: list[list[dict]]
+  Description: Extracts all tables from a document or spreadsheet.
+- format_sms_tool(alert: str) -> sms_text: str
+  Description: Formats a short SMS message.
+- extract_numbers_tool(text: str) -> numbers: list[float]
+  Description: Extracts all numbers from text.
+- format_phone_tool(phone: str, country: str) -> formatted: str
+  Description: Formats phone number for a country.
+- validate_phone_tool(phone: str) -> is_valid: bool
+  Description: Validates a phone number for correct format and region.
+- extract_numbers_from_csv_tool(csv_path: str, column: str) -> numbers: list[float]
+  Description: Extracts all numbers from a specific column in a CSV file.
+- compare_numbers_tool(a: float, b: float) -> comparison: str
+  Description: Compares two numbers and returns which is greater, or if they are equal.
+- extract_text_tool(file_path: str, type: str) -> content: str
+  Description: Extracts text from any file type (PDF, DOCX, TXT, etc.) by auto-detecting format.
+- pdf_merge_tool(pdf_files: list[str]) -> merged_path: str
+  Description: Merges multiple PDF files into one.
+- send_to_dashboard_tool(data: dict, dashboard_id: str) -> status: str
+  Description: Sends data to a specified dashboard.
+
+EXAMPLE:
+User query: "Summarize sales by category and email the report"
+[
+  {"function": "readExcelTool", "inputs": {"file_path": "?"}},
+  {"function": "groupByCategoryTool", "inputs": {"data": "?", "category_field": "?"}},
+  {"function": "calculateSumTool", "inputs": {"grouped_data": "?", "sum_field": "?"}},
+  {"function": "generateSummaryPDFTool", "inputs": {"summary_data": "?"}},
+  {"function": "generateEmailTool", "inputs": {"content": "?"}},
+  {"function": "sendEmailTool", "inputs": {"to": "?", "content": "?"}}
+]
+
+User query:
+"Extract all phone numbers from this document and send them via SMS"
+
+Respond ONLY with the JSON array as described above.
+
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "```json\n[\n  {\"function\": \"extract_phone_numbers_tool\", \"inputs\": {\"text\": \"?\"}},\n  {\"function\": \"send_sms_tool\", \"inputs\": {\"to\": \"?\", \"content\": \"?\"}}\n]\n```"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -0.019668258320201526
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 739,
+    "candidatesTokenCount": 55,
+    "totalTokenCount": 794,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 739
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 55
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "jCVWaKKjI_H_2PgPh_z--AY"
+}
+
+
+--- PROMPT ---
+You are an expert AI workflow planner. You are assisting a user in updating a step-by-step function call plan using a library of available tools.
+
+Context:
+- The user has provided an original request:
+  Extract all phone numbers from this document and send them via SMS
+- The current plan is a JSON array of function call steps, each with a function name and inputs.
+- The user now wants to update the plan as described below.
+- The available tools are provided as a JSON array, each with name, description, input, and output.
+
+Strict Instructions:
+1. Only use tools from the provided tool list. Do NOT invent or hallucinate any tools, steps, or data.
+2. Update the plan strictly according to the user's update request. Make only the necessary changes.
+3. Preserve all valid steps from the current plan unless the update request says to remove or change them.
+4. If you add, remove, or change steps, do so explicitly and only as required by the update request.
+5. For each step, use the correct function name and required inputs as per the tool schema.
+6. If an input value is not provided, leave it empty or as required by the schema, but do NOT invent values.
+7. Output ONLY a valid JSON array of function call steps. Do NOT include any explanation, comments, or extra text.
+8. Any deviation from this format, or any hallucination, will be rejected.
+
+User's Update Request:
+and upload phone numbers to cloud at last
+
+Current Plan (JSON array):
+[
+  {
+    "function": "extract_phone_numbers_tool",
+    "inputs": {
+      "text": "?"
+    }
+  },
+  {
+    "function": "send_sms_tool",
+    "inputs": {
+      "to": "?",
+      "content": "?"
+    }
+  }
+]
+
+Available Tools (JSON array):
+[
+  {
+    "name": "extract_phone_numbers_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "phones": "list[str]"
+    },
+    "description": "Extracts all phone numbers from text.",
+    "keywords": [
+      "extract",
+      "phone",
+      "numbers",
+      "text",
+      "find"
+    ]
+  },
+  {
+    "name": "send_sms_tool",
+    "input": {
+      "to": "str",
+      "content": "str"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Sends an SMS message to a phone number.",
+    "keywords": [
+      "send",
+      "sms",
+      "text",
+      "message",
+      "phone"
+    ]
+  },
+  {
+    "name": "extract_numbers_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "numbers": "list[float]"
+    },
+    "description": "Extracts all numbers from text.",
+    "keywords": [
+      "extract",
+      "numbers",
+      "text",
+      "parse",
+      "digits"
+    ]
+  },
+  {
+    "name": "format_phone_tool",
+    "input": {
+      "phone": "str",
+      "country": "str"
+    },
+    "output": {
+      "formatted": "str"
+    },
+    "description": "Formats phone number for a country.",
+    "keywords": [
+      "format",
+      "phone",
+      "number",
+      "country",
+      "validate"
+    ]
+  },
+  {
+    "name": "validate_phone_tool",
+    "input": {
+      "phone": "str"
+    },
+    "output": {
+      "is_valid": "bool"
+    },
+    "description": "Validates a phone number for correct format and region.",
+    "keywords": [
+      "validate",
+      "phone",
+      "number",
+      "check",
+      "region"
+    ]
+  },
+  {
+    "name": "upload_to_cloud_tool",
+    "input": {
+      "file_paths": "list[str]",
+      "cloud_service": "str"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Uploads files to a specified cloud service (e.g., Google Drive, Dropbox).",
+    "keywords": [
+      "upload",
+      "cloud",
+      "files",
+      "service",
+      "backup"
+    ]
+  },
+  {
+    "name": "extract_numbers_from_csv_tool",
+    "input": {
+      "csv_path": "str",
+      "column": "str"
+    },
+    "output": {
+      "numbers": "list[float]"
+    },
+    "description": "Extracts all numbers from a specific column in a CSV file.",
+    "keywords": [
+      "extract",
+      "numbers",
+      "csv",
+      "column",
+      "find"
+    ]
+  },
+  {
+    "name": "compare_numbers_tool",
+    "input": {
+      "a": "float",
+      "b": "float"
+    },
+    "output": {
+      "comparison": "str"
+    },
+    "description": "Compares two numbers and returns which is greater, or if they are equal.",
+    "keywords": [
+      "compare",
+      "numbers",
+      "greater",
+      "less",
+      "equal",
+      "compareNumbersTool"
+    ]
+  },
+  {
+    "name": "extract_tables_tool",
+    "input": {
+      "file_path": "str"
+    },
+    "output": {
+      "tables": "list[list[dict]]"
+    },
+    "description": "Extracts all tables from a document or spreadsheet.",
+    "keywords": [
+      "table",
+      "extract",
+      "spreadsheet",
+      "document",
+      "data"
+    ]
+  },
+  {
+    "name": "generate_word_cloud_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "word_cloud": "str"
+    },
+    "description": "Generates a word cloud image from text.",
+    "keywords": [
+      "generate",
+      "word",
+      "cloud",
+      "image",
+      "text"
+    ]
+  },
+  {
+    "name": "format_sms_tool",
+    "input": {
+      "alert": "str"
+    },
+    "output": {
+      "sms_text": "str"
+    },
+    "description": "Formats a short SMS message.",
+    "keywords": [
+      "format",
+      "sms",
+      "message",
+      "alert",
+      "text"
+    ]
+  },
+  {
+    "name": "calculate_median_tool",
+    "input": {
+      "data": "list[float]"
+    },
+    "output": {
+      "median": "float"
+    },
+    "description": "Calculates the median value of a list of numbers.",
+    "keywords": [
+      "median",
+      "calculate",
+      "data",
+      "statistics"
+    ]
+  }
+]
+
+Return ONLY the updated plan as a valid JSON array.
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "[\n  {\n    \"function\": \"extract_phone_numbers_tool\",\n    \"inputs\": {\n      \"text\": \"?\"\n    }\n  },\n  {\n    \"function\": \"send_sms_tool\",\n    \"inputs\": {\n      \"to\": \"?\",\n      \"content\": \"?\"\n    }\n  },\n  {\n    \"function\": \"upload_to_cloud_tool\",\n    \"inputs\": {\n      \"file_paths\": [],\n      \"cloud_service\": \"?\"\n    }\n  }\n]"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -0.00065861921000286811
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1745,
+    "candidatesTokenCount": 123,
+    "totalTokenCount": 1868,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1745
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 123
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "qiVWaL5HldfU8g-yo4qoCw"
+}
+
+
+--- PROMPT ---
+You are an expert AI workflow planner. You are assisting a user in updating a step-by-step function call plan using a library of available tools.
+
+Context:
+- The user has provided an original request:
+  Extract all phone numbers from this document and send them via SMS
+- The current plan is a JSON array of function call steps, each with a function name and inputs.
+- The user now wants to update the plan as described below.
+- The available tools are provided as a JSON array, each with name, description, input, and output.
+
+Strict Instructions:
+1. Only use tools from the provided tool list. Do NOT invent or hallucinate any tools, steps, or data.
+2. Update the plan strictly according to the user's update request. Make only the necessary changes.
+3. Preserve all valid steps from the current plan unless the update request says to remove or change them.
+4. If you add, remove, or change steps, do so explicitly and only as required by the update request.
+5. For each step, use the correct function name and required inputs as per the tool schema.
+6. If an input value is not provided, leave it empty or as required by the schema, but do NOT invent values.
+7. Output ONLY a valid JSON array of function call steps. Do NOT include any explanation, comments, or extra text.
+8. Any deviation from this format, or any hallucination, will be rejected.
+
+User's Update Request:
+delete upload to cloud step
+
+Current Plan (JSON array):
+[
+  {
+    "function": "extract_phone_numbers_tool",
+    "inputs": {
+      "text": "?"
+    }
+  },
+  {
+    "function": "send_sms_tool",
+    "inputs": {
+      "to": "?",
+      "content": "?"
+    }
+  },
+  {
+    "function": "upload_to_cloud_tool",
+    "inputs": {
+      "file_paths": [],
+      "cloud_service": "?"
+    }
+  }
+]
+
+Available Tools (JSON array):
+[
+  {
+    "name": "send_sms_tool",
+    "input": {
+      "to": "str",
+      "content": "str"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Sends an SMS message to a phone number.",
+    "keywords": [
+      "send",
+      "sms",
+      "text",
+      "message",
+      "phone"
+    ]
+  },
+  {
+    "name": "extract_phone_numbers_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "phones": "list[str]"
+    },
+    "description": "Extracts all phone numbers from text.",
+    "keywords": [
+      "extract",
+      "phone",
+      "numbers",
+      "text",
+      "find"
+    ]
+  },
+  {
+    "name": "upload_to_cloud_tool",
+    "input": {
+      "file_paths": "list[str]",
+      "cloud_service": "str"
+    },
+    "output": {
+      "status": "str"
+    },
+    "description": "Uploads files to a specified cloud service (e.g., Google Drive, Dropbox).",
+    "keywords": [
+      "upload",
+      "cloud",
+      "files",
+      "service",
+      "backup"
+    ]
+  },
+  {
+    "name": "extract_tables_tool",
+    "input": {
+      "file_path": "str"
+    },
+    "output": {
+      "tables": "list[list[dict]]"
+    },
+    "description": "Extracts all tables from a document or spreadsheet.",
+    "keywords": [
+      "table",
+      "extract",
+      "spreadsheet",
+      "document",
+      "data"
+    ]
+  },
+  {
+    "name": "generate_word_cloud_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "word_cloud": "str"
+    },
+    "description": "Generates a word cloud image from text.",
+    "keywords": [
+      "generate",
+      "word",
+      "cloud",
+      "image",
+      "text"
+    ]
+  },
+  {
+    "name": "format_sms_tool",
+    "input": {
+      "alert": "str"
+    },
+    "output": {
+      "sms_text": "str"
+    },
+    "description": "Formats a short SMS message.",
+    "keywords": [
+      "format",
+      "sms",
+      "message",
+      "alert",
+      "text"
+    ]
+  },
+  {
+    "name": "extract_numbers_tool",
+    "input": {
+      "text": "str"
+    },
+    "output": {
+      "numbers": "list[float]"
+    },
+    "description": "Extracts all numbers from text.",
+    "keywords": [
+      "extract",
+      "numbers",
+      "text",
+      "parse",
+      "digits"
+    ]
+  },
+  {
+    "name": "format_phone_tool",
+    "input": {
+      "phone": "str",
+      "country": "str"
+    },
+    "output": {
+      "formatted": "str"
+    },
+    "description": "Formats phone number for a country.",
+    "keywords": [
+      "format",
+      "phone",
+      "number",
+      "country",
+      "validate"
+    ]
+  },
+  {
+    "name": "validate_phone_tool",
+    "input": {
+      "phone": "str"
+    },
+    "output": {
+      "is_valid": "bool"
+    },
+    "description": "Validates a phone number for correct format and region.",
+    "keywords": [
+      "validate",
+      "phone",
+      "number",
+      "check",
+      "region"
+    ]
+  },
+  {
+    "name": "top_n_values_tool",
+    "input": {
+      "data": "list[float]",
+      "n": "int"
+    },
+    "output": {
+      "top_values": "list"
+    },
+    "description": "Returns the top N values from a provided list of numbers. The list must be explicitly provided by the user or produced by a previous step.",
+    "keywords": [
+      "top",
+      "values",
+      "highest",
+      "largest",
+      "n"
+    ],
+    "constraints": "Can only be used if a list of numbers is provided by the user or a previous tool. Do not use for unrelated or unsupported queries."
+  },
+  {
+    "name": "extract_numbers_from_csv_tool",
+    "input": {
+      "csv_path": "str",
+      "column": "str"
+    },
+    "output": {
+      "numbers": "list[float]"
+    },
+    "description": "Extracts all numbers from a specific column in a CSV file.",
+    "keywords": [
+      "extract",
+      "numbers",
+      "csv",
+      "column",
+      "find"
+    ]
+  },
+  {
+    "name": "delete_file_tool",
+    "input": {
+      "file_path": "str"
+    },
+    "output": {
+      "deleted": "bool"
+    },
+    "description": "Safely deletes a file from system.",
+    "keywords": [
+      "delete",
+      "file",
+      "remove",
+      "cleanup",
+      "storage"
+    ]
+  }
+]
+
+Return ONLY the updated plan as a valid JSON array.
+--- RESPONSE (200) ---
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "[\n  {\n    \"function\": \"extract_phone_numbers_tool\",\n    \"inputs\": {\n      \"text\": \"?\"\n    }\n  },\n  {\n    \"function\": \"send_sms_tool\",\n    \"inputs\": {\n      \"to\": \"?\",\n      \"content\": \"?\"\n    }\n  }\n]"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -4.7376839061960193e-05
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 1834,
+    "candidatesTokenCount": 78,
+    "totalTokenCount": 1912,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1834
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 78
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.0-flash",
+  "responseId": "vCVWaNi3OOKJ_NUPqtic2Qw"
+}
+

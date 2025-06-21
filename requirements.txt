@@ -1,0 +1,8 @@
+streamlit
+openai
+python-dotenv
+streamlit-extras
+streamlit-elements
+graphviz
+pillow
+scikit-learn 
