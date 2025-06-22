@@ -12,9 +12,67 @@ from core.update_prompt_builder import UpdatePromptBuilder
 import json
 import random
 
-st.set_page_config(page_title="Toolmate", page_icon="🤖", layout="wide")
+# Page configuration
+st.set_page_config(
+    page_title="Toolmate Pro",
+    page_icon="🛠️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-st.markdown('<h1 style="text-align:center;">🤖 Toolmate</h1>', unsafe_allow_html=True)
+# Custom CSS for new theme
+st.markdown("""
+    <style>
+        /* Main app background */
+        .main > div {
+            /* background-color: #f0f2f6; */ /* Light grey background */
+        }
+        /* Sidebar style */
+        .css-1d391kg {
+            /* background-color: #2c3e50; */ /* Darker sidebar */
+            /* color: #ecf0f1; */
+        }
+        /* Primary button color (Streamlit's default theming might override this for some buttons) */
+        div[data-testid="stButton"] > button {
+            border-color: #3498db; /* Blue border */
+            background-color: #3498db; /* Blue background */
+            color: white;
+        }
+        div[data-testid="stButton"] > button:hover {
+            border-color: #2980b9;
+            background-color: #2980b9;
+            color: white;
+        }
+        /* Input fields */
+        div[data-testid="stTextInput"] input, div[data-testid="stTextArea"] textarea {
+            border-radius: 0.3rem;
+        }
+        /* App title */
+        h1 {
+            color: #2c3e50; /* Dark blue-grey */
+            font-family: 'Arial', sans-serif;
+        }
+        /* Section headers */
+        h3 {
+            color: #3498db; /* Blue */
+        }
+        /* Styling for tool details in plan_display */
+        code {
+            background-color: #e8f0fe; /* Light blue background for code */
+            color: #333;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        small {
+            line-height: 1.2;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+st.markdown('<h1 style="text-align:center;">🛠️ Toolmate Pro</h1>', unsafe_allow_html=True)
 
 if 'chat_history' not in st.session_state:
     st.session_state['chat_history'] = []
@@ -26,6 +84,10 @@ if 'trigger_generate' not in st.session_state:
     st.session_state['trigger_generate'] = False
 if 'update_input' not in st.session_state:
     st.session_state['update_input'] = ""
+if 'tool_usage_stats' not in st.session_state:
+    st.session_state['tool_usage_stats'] = {}
+if 'tool_feedback' not in st.session_state:
+    st.session_state['tool_feedback'] = {}
 
 def get_random_prompt():
     try:
@@ -187,3 +249,20 @@ if active_chat:
         st.markdown("### 🤔 Why these functions?")
         st.info(reasoning)
     render_update_plan(active_chat, idx, relevant_tools, call_gemini, extract_json_array, update_chat_plan)
+
+    # Update and display tool usage statistics
+    if plan:
+        for step in plan:
+            func_name = step.get('function')
+            if func_name:
+                st.session_state['tool_usage_stats'][func_name] = st.session_state['tool_usage_stats'].get(func_name, 0) + 1
+
+    with st.sidebar:
+        st.markdown("---")
+        st.markdown("<h3 style='margin-bottom:0.5em;'>📊 Tool Usage Stats</h3>", unsafe_allow_html=True)
+        if st.session_state['tool_usage_stats']:
+            sorted_stats = sorted(st.session_state['tool_usage_stats'].items(), key=lambda item: item[1], reverse=True)
+            for tool, count in sorted_stats:
+                st.markdown(f"- **{tool}:** {count} uses")
+        else:
+            st.markdown("No tools used yet.")

@@ -44,13 +44,16 @@
 ## ✨ Features
 
 - 🧠 **AI-Powered Planning:** Converts your requests into actionable, explainable workflows.
-- 🛠️ **Extensible Tool Library:** 30+ built-in tools for data, text, files, communication, and more.
-- 🖥️ **Modern Streamlit UI:** Plan, review, and update workflows visually.
+- 🛠️ **Extensible & Enhanced Tool Library:** 30+ built-in tools for data, text, files, communication, and more. Tools now include detailed metadata like category, version, author, tags, and comprehensive parameter descriptions for improved clarity and filtering.
+- 🖥️ **Modern Streamlit UI (Toolmate Pro):** Plan, review, and update workflows visually with a refreshed, cleaner user interface.
+- 📊 **Workflow Graph Visualization:** View generated plans as a clear, top-down graph for better understanding of the flow.
+- 📈 **Tool Usage Statistics:** Track tool usage within your current session (displayed in the sidebar).
+- ⭐ **User Feedback on Tools:** Provide ratings and comments for tools directly within the plan view to help improve tool relevance and quality.
 - ⚡ **CLI Support:** For power users and scripting.
-- 🔍 **Semantic Tool Selection:** (Coming soon) Smarter, context-aware tool matching.
 - 📝 **Interactive Plan Editing:** Tweak, version, and experiment with your workflow steps.
 - 🔒 **Secure by Design:** API keys and secrets managed via environment files.
 - 🧩 **Plugin-ready:** (Planned) Add your own tools and integrations.
+- 🔍 **Semantic Tool Selection:** (Improved with richer tool data, further advancements coming soon) Smarter, context-aware tool matching.
 
 ---
 
@@ -118,8 +121,27 @@ python main.py
 ## 🧩 Adding/Editing Tools
 
 - Edit `data/function_tools.json` to add new function tools or update existing ones.
-- Each tool includes a name, input/output schema, description, and keywords.
-- No code changes required for new tools—just update the JSON!
+- Each tool definition is a JSON object with the following enhanced schema:
+  - `name` (str): The unique name of the tool.
+  - `category` (str): The category the tool belongs to (e.g., "File Operations", "Data Analysis").
+  - `version` (str): The version of the tool (e.g., "1.0").
+  - `author` (str): The author or maintainer of the tool.
+  - `description` (str): A concise description of what the tool does.
+  - `tags` (list[str]): A list of relevant tags for filtering and discovery.
+  - `keywords` (list[str]): A list of keywords that describe the tool's functionality.
+  - `input` (dict): An object where each key is an input parameter name.
+    - Each parameter value is an object with:
+      - `type` (str): The data type of the parameter (e.g., "str", "int", "list[dict]").
+      - `description` (str): A detailed description of what this parameter represents and how to use it.
+  - `output` (dict): An object describing the output parameters, similar in structure to `input`.
+    - Each parameter value is an object with:
+      - `type` (str): The data type of the output.
+      - `description` (str): A detailed description of what this output represents.
+  - `constraints` (str, optional): Any constraints or specific conditions for using the tool.
+  - `meta` (dict, optional): An object for additional contextual information.
+    - `usage_examples` (list[str], optional): Examples of how the tool might be used in a user query or plan.
+    - `related_tools` (list[str], optional): Names of other tools that are commonly used with or are similar to this one.
+- No code changes are required in the core logic for adding or modifying tools with this structure—just update the JSON!
 
 ---
 
