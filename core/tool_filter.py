@@ -17,9 +17,24 @@ def filter_relevant_tools(user_query, tools, top_n=12):
     """
     tool_texts = []
     for tool in tools:
+        name = tool.get('name', '')
+        description = tool.get('description', '')
         keywords = ' '.join(tool.get('keywords', []))
-        text = f"{tool.get('name', '')} {tool.get('description', '')} {keywords}"
+        category = tool.get('category', '')
+        tags = ' '.join(tool.get('tags', []))
+
+        parameters_descriptions = []
+        if isinstance(tool.get('input'), dict):
+            for param_info in tool['input'].values():
+                if isinstance(param_info, dict) and 'description' in param_info:
+                    parameters_descriptions.append(param_info['description'])
+
+        param_desc_text = ' '.join(parameters_descriptions)
+
+        # Combine all relevant text fields for creating the tool's representation
+        text = f"{name} {description} {keywords} {category} {tags} {param_desc_text}"
         tool_texts.append(text)
+
     corpus = tool_texts + [user_query]
     vectorizer = TfidfVectorizer(stop_words='english')
     tfidf_matrix = vectorizer.fit_transform(corpus)

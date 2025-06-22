@@ -38,13 +38,51 @@ def build_prompt(user_query, tools=None, example=None):
     print("Filtered tools:", [t['name'] for t in tools])
     tool_descriptions = []
     for tool in tools:
-        args = ', '.join([f"{k}: {v}" for k, v in tool['input'].items()])
-        outputs = ', '.join([f"{k}: {v}" for k, v in tool['output'].items()])
-        constraints = tool.get('constraints', None)
-        desc = f"- {tool['name']}({args}) -> {outputs}\n  Description: {tool['description']}"
-        if constraints:
-            desc += f"\n  CONSTRAINT: {constraints}"
-        tool_descriptions.append(desc)
+        # Basic tool info
+        tool_info = f"- {tool.get('name', 'Unknown Tool')}\n"
+        tool_info += f"  Description: {tool.get('description', 'No description available.')}\n"
+        if tool.get('category'):
+            tool_info += f"  Category: {tool.get('category')}\n"
+        if tool.get('tags'):
+            tool_info += f"  Tags: {', '.join(tool.get('tags'))}\n"
+
+        # Input parameters with their descriptions
+        tool_info += f"  Input Parameters:\n"
+        if isinstance(tool.get('input'), dict):
+            if tool['input']:
+                for param_name, param_details in tool['input'].items():
+                    param_type = param_details.get('type', 'unknown')
+                    param_desc = param_details.get('description', 'No description.')
+                    tool_info += f"    - {param_name} (type: {param_type}): {param_desc}\n"
+            else:
+                tool_info += f"    - None\n"
+        else:
+            tool_info += f"    - Invalid input format in schema\n"
+
+        # Output parameters with their descriptions
+        tool_info += f"  Output Parameters:\n"
+        if isinstance(tool.get('output'), dict):
+            if tool['output']:
+                for param_name, param_details in tool['output'].items():
+                    param_type = param_details.get('type', 'unknown')
+                    param_desc = param_details.get('description', 'No description.')
+                    tool_info += f"    - {param_name} (type: {param_type}): {param_desc}\n"
+            else:
+                tool_info += f"    - None\n"
+        else:
+            tool_info += f"    - Invalid output format in schema\n"
+
+        # Constraints
+        if tool.get('constraints'):
+            tool_info += f"  CONSTRAINT: {tool.get('constraints')}\n"
+
+        # Usage Examples (optional, could make prompt too long, consider conditional inclusion)
+        # if tool.get('meta') and tool['meta'].get('usage_examples'):
+        #     tool_info += f"  Usage Examples:\n"
+        #     for example_usage in tool['meta']['usage_examples']:
+        #         tool_info += f"    - {example_usage}\n"
+
+        tool_descriptions.append(tool_info)
     tool_list_str = '\n'.join(tool_descriptions)
     if example is None:
         example = '''User query: "Summarize sales by category and email the report"
